@@ -1,0 +1,1649 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<!-- no inline scripts allowed: if something gets injected into the page it does not run. Same policy in .htaccess and _headers -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; media-src 'self'; connect-src 'self' https://tiles.openfreemap.org; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clinica Esempio — Cura, struttura e fiducia</title>
+<meta name="description" content="Clinica Esempio a Roma (Piazza Istria): dermatologia, odontoiatria, fisioterapia e medicina estetica, con un approccio basato su struttura e fiducia.">
+<!-- SITE ADDRESS: www.clinicaesempio.it is a placeholder, to be replaced with the real domain (also in the JSON-LD below) -->
+<link rel="canonical" href="https://www.clinicaesempio.it/">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<!-- preview when the link is shared (WhatsApp, Facebook, LinkedIn, X…) -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="Clinica Esempio">
+<meta property="og:title" content="Clinica Esempio — Cura, struttura e fiducia">
+<meta property="og:description" content="Dermatologia, odontoiatria, fisioterapia e medicina estetica a Roma, in Piazza Istria.">
+<meta property="og:url" content="https://www.clinicaesempio.it/">
+<meta property="og:image" content="https://www.clinicaesempio.it/assets/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Clinica Esempio — cura fondata su struttura e fiducia">
+<meta name="twitter:card" content="summary_large_image">
+<!-- the clinic for search engines (Google Maps, local results); no rating here: the reviews are samples -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MedicalClinic",
+  "name": "Clinica Esempio",
+  "url": "https://www.clinicaesempio.it/",
+  "image": "https://www.clinicaesempio.it/assets/og-image.jpg",
+  "logo": "https://www.clinicaesempio.it/assets/favicon.svg",
+  "telephone": "+39 02 0000 0000",
+  "email": "info@clinicaesempio.it",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Piazza Istria",
+    "postalCode": "00199",
+    "addressLocality": "Roma",
+    "addressRegion": "RM",
+    "addressCountry": "IT"
+  },
+  "geo": { "@type": "GeoCoordinates", "latitude": 41.923, "longitude": 12.512825 },
+  "openingHoursSpecification": [
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "08:30", "closes": "19:30" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "09:00", "closes": "13:00" }
+  ],
+  "medicalSpecialty": ["Dermatology", "Dentistry", "Physiotherapy"],
+  "availableService": [
+    { "@type": "MedicalProcedure", "name": "Visita dermatologica" },
+    { "@type": "MedicalProcedure", "name": "Implantologia" },
+    { "@type": "MedicalProcedure", "name": "Ortodonzia invisibile" },
+    { "@type": "MedicalProcedure", "name": "Riabilitazione post-operatoria" },
+    { "@type": "MedicalProcedure", "name": "Medicina estetica" }
+  ]
+}
+</script>
+<script src="assets/theme.js"></script>
+<!-- fonts are served by the site itself (no request to Google): variable fonts, one file per alphabet -->
+<link rel="preload" href="assets/fonts/outfit-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+  @font-face{font-family:'Outfit';font-style:normal;font-weight:300 500;font-display:swap;
+    src:url(assets/fonts/outfit-latin.woff2) format('woff2');
+    unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+  @font-face{font-family:'Outfit';font-style:normal;font-weight:300 500;font-display:swap;
+    src:url(assets/fonts/outfit-latin-ext.woff2) format('woff2');
+    unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C4,U+2113,U+2C60-2C7F,U+A720-A7FF}
+  @font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400 500;font-display:swap;
+    src:url(assets/fonts/jetbrains-mono-latin.woff2) format('woff2');
+    unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+  @font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400 500;font-display:swap;
+    src:url(assets/fonts/jetbrains-mono-latin-ext.woff2) format('woff2');
+    unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C4,U+2113,U+2C60-2C7F,U+A720-A7FF}
+
+  :root{
+    --accent:#5fb3c6;
+    --on-accent:#04191e;
+    --tile:#e9ecec;
+    --gutter:clamp(16px,2.2vw,28px);
+    --gap:10px;
+    --radius:16px;
+    --mono:"JetBrains Mono",ui-monospace,monospace;
+    --sans:"Outfit",system-ui,sans-serif;
+    --ease:cubic-bezier(.2,.7,.2,1);
+    --spring:cubic-bezier(.34,1.56,.64,1);   /* small overshoot, for button micro-interactions */
+    --swift:cubic-bezier(.65,0,.35,1);
+  }
+  /* night (default): black background, white video under the spotlight.
+     .theme-night / .theme-day apply a theme to a single element (the sections' spotlight layer) */
+  :root,.theme-night{
+    --bg:#000;
+    --fg:#ececec;
+    --on-fg:#000;            /* text on a --fg filled surface */
+    --muted:#9a9a9a;
+    --line:rgba(255,255,255,.55);
+    --line-soft:rgba(255,255,255,.14);
+    --surface:#0b0b0b;
+    --cell:#0d0d0d;
+    --cell-hover:#161616;
+    --tile-ring:transparent;
+    /* colours used where the spotlight reveals the opposite video */
+    --spot-fg:#141414;
+    --on-spot-fg:#fff;
+    --spot-muted:#3a3a3a;
+    --chi-img:url("assets/chi-night.jpg");   /* "Chi siamo" background (same canvas as the day one, faces aligned) */
+    --tv-day:none;            /* "I trattamenti": which of the two videos this theme shows */
+    --tv-night:block;
+    /* "Prenota": liquid glass form */
+    --glass:rgba(255,255,255,.055);
+    --glass-hi:rgba(255,255,255,.38);
+    --glass-rim:rgba(255,255,255,.09);
+    --glass-field:rgba(255,255,255,.05);
+    --glass-field-on:rgba(255,255,255,.09);
+    --glass-line:rgba(255,255,255,.14);
+    --glass-knob:rgba(255,255,255,.16);
+    --glow-o:.85;
+  }
+  /* day: everything inverted — white background, black video under the spotlight */
+  :root[data-theme="day"],.theme-day{
+    --bg:#fff;
+    --fg:#141414;
+    --on-fg:#fff;
+    --muted:#6a6a6a;
+    --line:rgba(0,0,0,.55);
+    --line-soft:rgba(0,0,0,.12);
+    --surface:#fff;
+    --cell:#f4f4f3;
+    --cell-hover:#ebebea;
+    --tile-ring:rgba(0,0,0,.12);
+    --spot-fg:#ececec;
+    --on-spot-fg:#000;
+    --spot-muted:#bdbdbd;
+    --chi-img:url("assets/chi-day.jpg");
+    --tv-day:block;
+    --tv-night:none;
+    --glass:rgba(255,255,255,.38);
+    --glass-hi:rgba(255,255,255,.95);
+    --glass-rim:rgba(0,0,0,.06);
+    --glass-field:rgba(255,255,255,.5);
+    --glass-field-on:rgba(255,255,255,.8);
+    --glass-line:rgba(0,0,0,.1);
+    --glass-knob:rgba(255,255,255,.85);
+    --glow-o:.8;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html,body{margin:0}
+  html{scrollbar-gutter:stable}
+  /* lock on body (not html): it propagates to the viewport, so the sticky grid stays pinned */
+  html.locked body{overflow:hidden}
+  body{background:var(--bg);color:var(--fg);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+  a{color:inherit;text-decoration:none}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+  /* ---------- SCROLL STAGE: the hero shrinks into the grid while the page is pinned ---------- */
+  .stage{position:relative;height:280vh}
+  /* the scroll settles on the full hero, on the finished grid, or at the very bottom (footer): a scroll
+     that stops close to one of them glides onto it, so the grid is never left a little short of complete */
+  html{scroll-snap-type:y proximity}
+  .snap{position:absolute;left:0;width:1px;height:1px;scroll-snap-align:start;pointer-events:none}
+  .snap-grid{top:calc(100% - 100vh);top:calc(100% - 100svh)}
+  .site-foot{scroll-snap-align:end}
+  .sticky{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+
+  /* ---------- GRID ---------- */
+  .grid{
+    position:absolute;inset:0;padding:var(--gutter);display:grid;gap:var(--gap);
+    grid-template-columns:repeat(3,1fr);
+    /* rows 1+2 add up to --hero-h (set by JS so the hero cell keeps the screen's proportions) */
+    grid-template-rows:calc(var(--hero-h,70%) * .36 - var(--gap) / 2) calc(var(--hero-h,70%) * .64 - var(--gap) / 2) 1fr;
+    grid-template-areas:
+      "hero hero chi"
+      "hero hero tratt"
+      "prenota contatti dove";
+  }
+  .cell-hero{grid-area:hero}
+  .c-chi{grid-area:chi}
+  .c-tratt{grid-area:tratt}
+  .c-prenota{grid-area:prenota}
+  .c-contatti{grid-area:contatti}
+  .c-dove{grid-area:dove}
+
+  @property --hov{syntax:'<number>';inherits:false;initial-value:0}
+  .cell{
+    --q:0;
+    position:relative;display:flex;flex-direction:column;justify-content:space-between;gap:10px;min-height:0;
+    padding:clamp(14px,1.5vw,22px);border-radius:var(--radius);
+    background:var(--cell);border:1px solid var(--line-soft);overflow:hidden;
+    /* --q: entrance progress (can overshoot 1 for a small settle), --qo: same clamped to 0..1.
+       each cell flies in from its own direction (--dx/--dy/--rot), unblurring as it lands */
+    --qo:0;--dx:0px;--dy:40px;--rot:0deg;
+    opacity:var(--qo);
+    transform:
+      translate(calc((1 - var(--q)) * var(--dx)),calc((1 - var(--q)) * var(--dy)))
+      rotate(calc((1 - var(--q)) * var(--rot)))
+      scale(calc(.86 + var(--q) * .14 + var(--hov) * .015));
+    pointer-events:none;
+    transition:--hov .35s var(--ease),background-color .3s,border-color .3s;
+  }
+  .cell.ready{pointer-events:auto}
+  .cell:hover,.cell:focus-visible{--hov:1;background:var(--cell-hover);border-color:var(--line)}
+  .cell-arrow{
+    position:absolute;top:clamp(12px,1.3vw,18px);right:clamp(12px,1.3vw,18px);
+    width:28px;height:28px;border-radius:50%;border:1px solid var(--line-soft);
+    display:grid;place-items:center;overflow:hidden;transition:transform .5s var(--spring),background .3s,color .3s,border-color .3s;
+  }
+  .cell-arrow svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:1.8}
+  .cell:hover .cell-arrow{transform:scale(1.12);background:var(--fg);color:var(--on-fg);border-color:var(--fg)}
+  .cell:hover .cell-arrow svg{animation:arrow-loop .6s both}
+  .kicker{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .kicker b{color:var(--accent);font-weight:400}
+  .cell .kicker{padding-right:34px}
+  .cell h3{margin:6px 0 0;font-weight:400;font-size:clamp(17px,1.75vw,28px);line-height:1.05;letter-spacing:-.02em;max-width:16ch}
+  .cell p{margin:0;font-size:13px;line-height:1.45;font-weight:300;color:var(--muted);max-width:34ch}
+
+  .t-list{list-style:none;margin:0;padding:0;display:grid}
+  .t-list li{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--line-soft);font-size:14px}
+  .t-list svg{width:18px;height:18px;flex:none;fill:none;stroke:var(--accent);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+  .t-list span{margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--muted)}
+
+  .c-prenota{background:var(--accent);border-color:transparent;color:var(--on-accent)}
+  .c-prenota:hover,.c-prenota:focus-visible{background:#7cc5d5;border-color:transparent}
+  .c-prenota .kicker,.c-prenota p{color:rgba(4,25,30,.65)}
+  .c-prenota .kicker b{color:var(--on-accent)}
+  .c-prenota .cell-arrow{border-color:rgba(4,25,30,.3)}
+  .c-prenota:hover .cell-arrow{background:var(--on-accent);color:var(--accent);border-color:var(--on-accent)}
+
+  .status{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase}
+  .status i{width:7px;height:7px;border-radius:50%;background:var(--muted)}
+  .status.is-open i{background:#4cc38a;box-shadow:0 0 0 4px rgba(76,195,138,.18)}
+  .big-line{font-size:clamp(15px,1.35vw,20px);font-weight:400;letter-spacing:-.01em}
+
+  .mini-map{position:absolute;right:-10px;bottom:-10px;width:62%;height:auto;opacity:.9;pointer-events:none}
+  .mini-map .road{stroke:var(--line-soft);stroke-width:6;fill:none;stroke-linecap:round}
+  .mini-map .road.thin{stroke-width:2.5}
+  .mini-map .pin{fill:var(--accent)}
+  .mini-map .ring{fill:none;stroke:var(--accent);opacity:.35}
+  .c-dove > :not(.mini-map):not(.cell-arrow){position:relative}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:absolute;inset:0;z-index:2;
+    display:grid;grid-template-rows:auto 1fr auto;
+    padding:var(--gutter);isolation:isolate;overflow:hidden;
+    transform-origin:0 0;will-change:transform;
+  }
+  .bg{position:absolute;inset:0;z-index:-1;pointer-events:none}
+  .bg-video{
+    position:absolute;inset:0;width:100%;height:100%;
+    object-fit:cover;background:var(--bg);
+  }
+  /* the reveal video is visible only through a JS-built mask: soft spotlight + fading tail */
+  .bg-video.reveal{
+    z-index:1;background:transparent;
+    -webkit-mask-image:linear-gradient(transparent,transparent);
+            mask-image:linear-gradient(transparent,transparent);
+    -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+  }
+  body.in-grid .hero{cursor:pointer}
+  body.in-grid .hero button{cursor:pointer}
+
+  /* ---------- PILLS ---------- */
+  .pill{
+    display:inline-flex;align-items:center;justify-content:center;gap:.5em;
+    height:30px;padding:0 12px;border:1px solid var(--line);border-radius:6px;
+    font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+    white-space:nowrap;
+    --fill:var(--fg);--fill-ink:var(--on-fg);
+  }
+  .pill svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.6}
+
+  /* ---------- BUTTON MOTION (pills + .btn) ----------
+     hover: a circle of colour grows from the point where the pointer comes in (and shrinks towards
+     where it leaves, --x/--y/--d set in JS) while the label rolls up to a copy of itself.
+     press: quick squeeze, released with a small spring. .is-hover/.is-press mirror the state on the
+     spotlight copy of "Chi siamo". */
+  .pill,.btn{
+    position:relative;isolation:isolate;overflow:hidden;
+    transition:color .35s var(--ease),border-color .35s var(--ease),transform .55s var(--spring);
+  }
+  .pill::before,.btn::before{
+    content:"";position:absolute;z-index:-1;left:var(--x,50%);top:var(--y,50%);
+    width:var(--d,260%);aspect-ratio:1;border-radius:50%;background:var(--fill);
+    transform:translate(-50%,-50%) scale(0);transition:transform .6s var(--ease);pointer-events:none;
+  }
+  .lbl{display:inline-block;overflow:hidden;height:1.4em;line-height:1.4em}
+  .lbl > span{display:inline-block;text-shadow:0 1.4em currentColor;transition:transform .55s var(--ease)}
+  .pill:is(.is-hover,:focus-visible),.btn:is(.is-hover,:focus-visible){color:var(--fill-ink);border-color:var(--fill)}
+  .pill:is(.is-hover,:focus-visible)::before,.btn:is(.is-hover,:focus-visible)::before{transform:translate(-50%,-50%) scale(1)}
+  .pill.is-hover .lbl > span,.btn.is-hover .lbl > span{transform:translateY(-1.4em)}
+  @media (hover:hover){
+    .pill:hover,.btn:hover{color:var(--fill-ink);border-color:var(--fill)}
+    .pill:hover::before,.btn:hover::before{transform:translate(-50%,-50%) scale(1)}
+    .pill:hover .lbl > span,.btn:hover .lbl > span{transform:translateY(-1.4em)}
+  }
+  .pill:active,.pill.is-press,.btn:active,.btn.is-press{transform:scale(.94);transition-duration:.35s,.35s,.12s}
+
+  /* arrow leaves through the top-right corner and comes back in from the bottom-left */
+  @keyframes arrow-loop{
+    0%{transform:none;animation-timing-function:cubic-bezier(.5,0,.75,0)}
+    42%{transform:translate(170%,-170%)}
+    42.01%{transform:translate(-170%,170%);animation-timing-function:cubic-bezier(.2,.8,.2,1)}
+    100%{transform:none}
+  }
+  /* icon redraws itself */
+  @keyframes draw{
+    from{stroke-dasharray:100;stroke-dashoffset:100}
+    to{stroke-dasharray:100;stroke-dashoffset:0}
+  }
+
+  .top{display:flex;justify-content:flex-end;align-items:flex-start;gap:12px}
+  .group{display:flex;gap:6px;align-items:center}
+
+  /* ---------- DAY / NIGHT SWITCH ---------- */
+  .switch{
+    --kn:var(--fg);--kn-ink:var(--on-fg);
+    position:relative;width:58px;height:30px;border:1px solid var(--line);border-radius:999px;
+    display:flex;align-items:center;justify-content:space-between;padding:0 8px;
+  }
+  .switch svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;opacity:.55}
+  .switch{transition:border-color .3s,transform .55s var(--spring)}
+  .switch:active,.switch.is-press{transform:scale(.95);transition-duration:.3s,.12s}
+  /* the knob springs across, stretches towards the other side on hover/press, icons spin in and out */
+  .knob{
+    position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:999px;
+    background:var(--kn);color:var(--kn-ink);display:grid;place-items:center;
+    transition:transform .6s var(--spring),width .35s var(--ease);
+  }
+  .knob svg{opacity:1;grid-area:1/1;transition:opacity .3s,transform .6s var(--spring)}
+  .knob .sun{opacity:0;transform:rotate(-120deg) scale(.3)}
+  [aria-checked="true"] .knob{transform:translateX(28px)}
+  [aria-checked="true"] .knob .sun{opacity:1;transform:none}
+  [aria-checked="true"] .knob .moon{opacity:0;transform:rotate(120deg) scale(.3)}
+  .switch.is-hover .knob{width:26px}
+  .switch[aria-checked="true"].is-hover .knob{transform:translateX(24px)}
+  @media (hover:hover){
+    .switch:hover .knob{width:26px}
+    .switch[aria-checked="true"]:hover .knob{transform:translateX(24px)}
+  }
+  .switch:active .knob,.switch.is-press .knob{width:31px}
+  .switch[aria-checked="true"]:is(:active,.is-press) .knob{transform:translateX(19px)}
+
+  /* theme change: the new theme grows as a circle from the switch (animated in JS) */
+  ::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
+  /* fallback for browsers without View Transitions: short colour cross-fade */
+  .theme-anim,.theme-anim *{transition:background-color .6s,color .6s,border-color .6s,box-shadow .6s!important}
+
+  /* ---------- HERO CONTENT ---------- */
+  .center{align-self:start;padding-top:clamp(4px,1.5vh,20px);padding-bottom:40px}
+  .wordmark{
+    position:relative;display:inline-block;margin:0;
+    font-weight:400;line-height:.9;letter-spacing:-.045em;
+    font-size:clamp(76px,17.1vw,270px);
+    user-select:none;
+  }
+  .wordmark .ch{display:inline-block}
+  .wordmark .i{position:relative}
+  .leaf{
+    position:absolute;left:50%;top:-.02em;width:.26em;height:.36em;
+    transform:translate(-50%,0) rotate(18deg);transform-origin:50% 100%;
+  }
+  .leaf path{fill:var(--accent)}
+
+  .sub{display:flex;flex-direction:column;gap:6px;margin-top:clamp(10px,2vw,18px)}
+  .sub-row{display:flex;align-items:center;gap:12px}
+  .sub h2{
+    margin:0;font-family:var(--mono);font-weight:400;
+    font-size:clamp(17px,2.4vw,26px);letter-spacing:.04em;text-transform:uppercase;
+  }
+  .sq{
+    width:clamp(26px,3vw,32px);height:clamp(26px,3vw,32px);border-radius:5px;
+    background:var(--fg);color:var(--on-fg);display:grid;place-items:center;overflow:hidden;
+    transition:transform .55s var(--spring),background .3s,color .3s;
+  }
+  .sq svg{width:45%;height:45%;stroke:currentColor;fill:none;stroke-width:2}
+  @media (hover:hover){
+    .sq:hover{transform:scale(1.1);background:var(--accent);color:#000}
+    .sq:hover svg{animation:arrow-loop .6s both}
+  }
+  .sq:active{transform:scale(.9);transition-duration:.12s,.3s,.3s}
+  /* fit-content: the box is the phrase itself, not the whole width of the screen
+     (otherwise the spotlight darkened it as soon as the cursor reached its height) */
+  .tagline{margin:0;width:fit-content;font-size:clamp(13px,1.3vw,15px);color:var(--muted);font-weight:300}
+  .tagline b{color:var(--fg);font-weight:400}
+
+  .bottom{display:flex;align-items:end}
+  .tiles{display:flex;gap:8px}
+  .tile{
+    position:relative;width:48px;height:48px;border-radius:9px;background:var(--tile);
+    box-shadow:0 0 0 1px var(--tile-ring);
+    display:grid;place-items:center;transition:transform .55s var(--spring),background .3s;
+  }
+  .tile svg{width:26px;height:26px;stroke:#2f8ea4;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+  @media (hover:hover){
+    .tile:hover{transform:translateY(-6px) scale(1.06);background:#fff}
+    .tile:hover path{animation:draw .9s var(--ease) both}
+  }
+  .tile:active{transform:translateY(-2px) scale(.93);transition-duration:.12s,.3s}
+  .tile::after{
+    content:attr(data-label);position:absolute;bottom:calc(100% + 8px);left:50%;
+    translate:-50% 6px;scale:.85;transform-origin:50% 100%;opacity:0;pointer-events:none;
+    font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;
+    background:var(--fg);color:var(--on-fg);padding:4px 7px;border-radius:4px;white-space:nowrap;
+    transition:opacity .2s,translate .45s var(--spring),scale .45s var(--spring);
+  }
+  .tile:hover::after,.tile:focus-visible::after{opacity:1;translate:-50% 0;scale:1}
+
+  /* ---------- ADAPT TO SPOTLIGHT (--dark 0..1 is set by JS) ---------- */
+  .dk{--k:calc(var(--dark,0) * 100%)}
+  .pill.dk{color:color-mix(in srgb,var(--fg),var(--spot-fg) var(--k));border-color:color-mix(in srgb,var(--line),var(--spot-fg) var(--k));
+    --fill:color-mix(in srgb,var(--fg),var(--spot-fg) var(--k));--fill-ink:color-mix(in srgb,var(--on-fg),var(--on-spot-fg) var(--k))}
+  .pill.dk:is(:hover,:focus-visible){color:var(--fill-ink);border-color:var(--fill)}
+  .switch.dk{color:color-mix(in srgb,var(--fg),var(--spot-fg) var(--k));border-color:color-mix(in srgb,var(--line),var(--spot-fg) var(--k));
+    --kn:color-mix(in srgb,var(--fg),var(--spot-fg) var(--k));--kn-ink:color-mix(in srgb,var(--on-fg),var(--on-spot-fg) var(--k))}
+  .ch.dk,.sub h2.dk,.tagline.dk b{color:color-mix(in srgb,var(--fg),var(--spot-fg) var(--k))}
+  .tagline.dk{color:color-mix(in srgb,var(--muted),var(--spot-muted) var(--k))}
+  .sq.dk{background:color-mix(in srgb,var(--fg),var(--spot-fg) var(--k));color:color-mix(in srgb,var(--on-fg),var(--on-spot-fg) var(--k))}
+  .sq.dk:hover{background:var(--accent);color:#000}
+  .tile.dk{box-shadow:0 0 0 1px var(--tile-ring),0 0 0 1px rgba(0,0,0,calc(var(--dark,0) * .18)),0 6px 18px rgba(0,0,0,calc(var(--dark,0) * .14))}
+
+  /* ---------- ENTRANCE ---------- */
+  /* uses `translate` (not `transform`), so the buttons' own hover/press transforms keep working after it */
+  .rv{opacity:0;translate:0 14px;animation:in .9s var(--ease) forwards;animation-delay:calc(var(--d,0) * 90ms + 150ms)}
+  @keyframes in{to{opacity:1;translate:0 0}}
+  html.loading .rv{animation-play-state:paused}   /* the entrance waits for the loading screen to go */
+
+  /* ---------- LOADER: liquid dots ----------
+     a row of small dots between two end dots; a drop runs back and forth along it, stretching with its
+     speed and melting into the dots it meets (the "goo" filter: blur, then a hard alpha threshold) */
+  .goo{width:116px;height:24px;overflow:visible;fill:currentColor;color:var(--fg)}
+  .goo g{filter:url(#goo)}
+  .goo .mv{transform-box:fill-box;transform-origin:50% 50%;animation:goo-run 1.6s cubic-bezier(.65,0,.35,1) infinite alternate}
+  .goo .sm{animation:goo-dot 1.6s ease-in-out infinite alternate;animation-delay:calc(var(--i) * -.2s)}
+  @keyframes goo-run{
+    0%{transform:translateX(0) scale(1,1)}
+    50%{transform:translateX(46px) scale(1.7,.78)}
+    100%{transform:translateX(92px) scale(1,1)}
+  }
+  @keyframes goo-dot{from{opacity:.35}to{opacity:1}}
+  /* first load: the page colour with the loader, until the hero video can play */
+  .loader{
+    position:fixed;inset:0;z-index:300;display:grid;place-items:center;background:var(--bg);
+    transition:opacity .6s var(--ease),visibility 0s .6s;
+  }
+  html:not(.loading) .loader{opacity:0;visibility:hidden;pointer-events:none}
+
+  /* ---------- FULL SECTION PANEL (expands out of the clicked cell) ---------- */
+  .panel{position:fixed;inset:0;z-index:100;background:var(--bg);color:var(--fg);overflow-y:auto;overscroll-behavior:contain}
+  .panel[hidden]{display:none}
+  /* the colour of the clicked cell, faded out as the section grows (and in as it shrinks back).
+     Only its opacity changes: animating the panel's own background colour repainted the whole section
+     on every frame. Sticky + negative margin: always covers the screen, takes no room */
+  .panel-tint{position:sticky;top:0;height:100vh;height:100svh;margin-bottom:-100vh;margin-bottom:-100svh;opacity:0;pointer-events:none;will-change:opacity}
+  .panel-bar{
+    position:sticky;top:0;z-index:1;display:flex;justify-content:space-between;align-items:center;gap:12px;
+    padding:var(--gutter);
+  }
+  .panel-bar::before{
+    content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+    background:linear-gradient(var(--bg) 65%,transparent);transition:opacity .35s;
+  }
+  .panel-bar .pill svg{width:12px;height:12px}
+  .panel-body{max-width:1120px;margin:0 auto;padding:8px var(--gutter) 96px}
+  /* the section grows out of the clicked cell: clip-path on .panel, scale on .panel-inner (both animated in JS) */
+  /* clip: content entering with a small zoom (photo, video) must not poke out of the section, or a
+     scrollbar appears for a moment and the whole page jumps when it goes away */
+  .panel-inner{position:relative;min-height:100%;overflow:clip}
+  .panel-bar .group{gap:12px}
+  /* every section: an exact copy of the section in the opposite theme, shown only through the spotlight */
+  .panel-alt{
+    position:absolute;inset:0;z-index:2;pointer-events:none;visibility:hidden;
+    background:var(--bg);color:var(--fg);
+    -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+  }
+
+  /* ---------- "CHI SIAMO": photo in the middle, values on the left, text on the right ----------
+     The photo's background is the page colour (#fff by day, #000 by night), so it blends into the
+     section. The spotlight copy uses the opposite theme, so it shows the other photo, aligned. */
+  /* the bar floats over the photo, and gets its background back once the section is scrolled */
+  .panel:is([data-sec="chi"],[data-sec="trattamenti"],[data-sec="dove"]):not(.scrolled) .panel-bar::before{opacity:0}
+  .panel:is([data-sec="chi"],[data-sec="trattamenti"]) .panel-body{max-width:none;padding:0}
+  .chi{
+    --bar-h:calc(var(--gutter) * 2 + 30px);
+    display:grid;grid-template-columns:minmax(0,1fr) 60svh minmax(0,1fr);gap:clamp(20px,3vw,48px);
+    align-items:center;min-height:calc(100svh - var(--bar-h));
+    /* content stays in the upper ~3/4, clear of the shoulders at the bottom of the photo */
+    padding:0 var(--gutter) 24svh;
+  }
+  .chi-photo{
+    position:absolute;top:0;left:0;right:0;height:100svh;pointer-events:none;
+    background:var(--chi-img) 50% 0 / auto 100% no-repeat;
+  }
+  .chi-values,.chi-text{position:relative;grid-row:1}
+  /* text on the left of the face, the three values on its right (both hug the photo) */
+  .chi-text{grid-column:1;justify-self:end;max-width:430px}
+  .chi-values{grid-column:3;justify-self:start;list-style:none;margin:0;padding:0;display:grid;gap:clamp(18px,3.4vh,34px);max-width:320px}
+  .chi-val{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;cursor:default}
+  .chi-num{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:var(--muted);display:inline-block;transition:color .3s,letter-spacing .5s var(--ease)}
+  .chi-val h3{margin:2px 0 4px;font-weight:400;font-size:clamp(18px,1.5vw,22px);letter-spacing:-.01em;transition:transform .55s var(--spring)}
+  .chi-val p{margin:0;color:var(--muted);font-weight:300;font-size:14px;line-height:1.5;transition:color .4s,transform .55s var(--spring) .04s}
+  .chi .p-title{font-size:clamp(36px,3.4vw,60px);margin:12px 0 18px}
+  .chi .p-lead{font-size:clamp(15px,1.15vw,18px)}
+  .chi-team{margin:12px 0 0;font-size:14px;line-height:1.5;color:var(--muted);font-weight:300;max-width:42ch}
+  .chi-text .btn{margin-top:24px}
+
+  /* ---------- "Chi siamo" icon hover ----------
+     the tile lifts straight up (no tilt), fills with the accent colour from the centre, sends out a ring,
+     and each icon does its own thing: bars grow, the eye blinks, the heart beats.
+     Also used by the treatment rows. .is-hover mirrors the state on the spotlight copy. */
+  .chi-ico{
+    position:relative;isolation:isolate;
+    width:46px;height:46px;border-radius:12px;border:1px solid var(--line-soft);display:grid;place-items:center;
+    transition:transform .6s var(--spring),border-color .3s,box-shadow .5s var(--ease);
+  }
+  .chi-ico::before,.chi-ico::after{content:"";position:absolute;border-radius:inherit;pointer-events:none}
+  .chi-ico::before{inset:-1px;z-index:-1;background:var(--accent);transform:scale(0);transition:transform .5s var(--spring)}
+  .chi-ico::after{inset:-1px;border:1px solid var(--accent);opacity:0}
+  .chi-ico svg{width:22px;height:22px;fill:none;stroke:var(--accent);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;overflow:visible;transition:stroke .3s}
+  .chi-ico :is(.bar,.eye,.pupil,.heart){transform-box:fill-box}
+  .chi-ico .bar{transform-origin:50% 100%}
+  /* straight lift (no tilt) with a soft accent glow underneath */
+  :is(.chi-val,.tr-card):is(:hover,.is-hover) .chi-ico{transform:translateY(-5px) scale(1.08);border-color:var(--accent);box-shadow:0 12px 24px -10px rgba(95,179,198,.75)}
+  :is(.chi-val,.tr-card):is(:hover,.is-hover) .chi-ico::before{transform:none}
+  :is(.chi-val,.tr-card):is(:hover,.is-hover) .chi-ico::after{animation:ping .9s var(--ease)}
+  :is(.chi-val,.tr-card):is(:hover,.is-hover) .chi-ico svg{stroke:var(--on-accent)}
+  .chi-val:is(:hover,.is-hover) .bar{animation:bar-grow .7s var(--spring) both}
+  .chi-val:is(:hover,.is-hover) .bar:nth-child(2){animation-delay:.08s}
+  .chi-val:is(:hover,.is-hover) .bar:nth-child(3){animation-delay:.16s}
+  .chi-val:is(:hover,.is-hover) .eye{transform-origin:50% 50%;animation:blink .9s var(--ease) .1s}
+  .chi-val:is(:hover,.is-hover) .pupil{animation:look 1.2s var(--ease) .1s}
+  .chi-val:is(:hover,.is-hover) .heart{transform-origin:50% 50%;animation:beat 1s var(--ease)}
+  .chi-val:is(:hover,.is-hover) .chi-num{color:var(--accent);letter-spacing:.2em}
+  .chi-val:is(:hover,.is-hover) h3{transform:translateX(6px)}
+  .chi-val:is(:hover,.is-hover) p{color:var(--fg);transform:translateX(6px)}
+  @keyframes ping{from{opacity:.9;transform:scale(1)}to{opacity:0;transform:scale(1.55)}}
+  @keyframes bar-grow{from{transform:scaleY(.15)}to{transform:none}}
+  @keyframes blink{0%,100%{transform:none}30%{transform:scaleY(.08)}55%{transform:none}}
+  @keyframes look{0%,100%{transform:none}55%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+  @keyframes beat{0%,100%{transform:none}18%{transform:scale(1.28)}34%{transform:scale(.94)}52%{transform:scale(1.16)}70%{transform:none}}
+
+  /* ---------- "Chi siamo" buttons ----------
+     magnetic pull towards the cursor (JS sets `translate`), the CTA arrow shoots out and comes back */
+  .mag{transition:color .35s var(--ease),border-color .35s var(--ease),transform .55s var(--spring),translate .7s var(--spring)}
+  .mag.mag-on{transition:color .35s var(--ease),border-color .35s var(--ease),transform .55s var(--spring),translate .18s ease-out}
+  .mag:is(:active,.is-press){transition-duration:.35s,.35s,.12s,.18s}
+  .btn-ico{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+  .btn:is(:hover,.is-hover) .btn-ico{animation:arrow-x .65s both}
+  .back:is(:hover,.is-hover) svg{animation:arrow-x-back .65s both}
+  @keyframes arrow-x{
+    0%{transform:none;animation-timing-function:cubic-bezier(.5,0,.75,0)}
+    42%{transform:translateX(220%)}
+    42.01%{transform:translateX(-220%);animation-timing-function:cubic-bezier(.2,.8,.2,1)}
+    100%{transform:none}
+  }
+  @keyframes arrow-x-back{
+    0%{transform:none;animation-timing-function:cubic-bezier(.5,0,.75,0)}
+    42%{transform:translateX(-220%)}
+    42.01%{transform:translateX(220%);animation-timing-function:cubic-bezier(.2,.8,.2,1)}
+    100%{transform:none}
+  }
+  /* not enough room on the sides: photo on top, then the text, then the three values */
+  @media (max-width:1100px),(max-aspect-ratio:13/10){
+    .chi{
+      --ph:min(72svh,125vw,640px);
+      display:flex;flex-direction:column;align-items:stretch;gap:40px;min-height:0;
+      padding:var(--ph) var(--gutter) 72px;
+    }
+    /* below the bar, so its buttons never sit on the hair; soft fade at the top and bottom edges */
+    .chi-photo{top:var(--bar-h);height:var(--ph);background-size:auto 135%}
+    .chi-photo::before,.chi-photo::after{content:"";position:absolute;left:0;right:0}
+    .chi-photo::before{top:0;height:12%;background:linear-gradient(var(--bg),transparent)}
+    .chi-photo::after{bottom:0;height:35%;background:linear-gradient(transparent,var(--bg))}
+    .chi-text{max-width:560px}
+    .chi-values{order:2;max-width:none;grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+  }
+  @media (max-width:560px){
+    .chi{--bar-h:calc(var(--gutter) * 2 + 32px)}
+  }
+
+  /* ---------- "I TRATTAMENTI": face on the right of the screen, text + treatments on the left ----------
+     two versions of the same footage: day (light background) and night (black background); each theme
+     shows its own, so the spotlight copy (opposite theme) shows the other one, in sync.
+     Desktop: the video fills the height and is shifted so the lips (40% of the frame) sit at 70% of
+     the screen; the cheek beyond the right edge is cropped, the video's own background on its left
+     melts into the page with a gradient. */
+  .tr{
+    --bar-h:calc(var(--gutter) * 2 + 30px);
+    --vw:calc(100svh * 16 / 9);                 /* on-screen width of the video */
+    --vl:calc(70% - var(--vw) * .4);            /* its left edge */
+    display:block;min-height:calc(100svh - var(--bar-h));
+    padding:0 var(--gutter);
+  }
+  .tr-media{position:absolute;top:0;left:0;right:0;height:100svh;overflow:hidden;pointer-events:none}
+  .tr-video{
+    position:absolute;top:0;left:var(--vl);width:var(--vw);height:100%;object-fit:cover;
+    /* an (invisible) filter stops Chrome from drawing the video as a hardware overlay
+       on top of everything, which would hide the spotlight copy above it */
+    filter:brightness(1.001);
+  }
+  .tv-day{display:var(--tv-day)}
+  .tv-night{display:var(--tv-night)}
+  .tr-media::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(90deg,var(--bg) calc(var(--vl) + var(--vw) * .03),transparent calc(var(--vl) + var(--vw) * .13));
+  }
+  /* left column: the heading on top, the wheel of cards fills the rest of the screen height */
+  .tr-text{
+    position:relative;display:flex;flex-direction:column;
+    width:min(100%,36vw);max-width:560px;height:calc(100svh - var(--bar-h));
+  }
+  .tr .p-title{font-size:clamp(34px,3.2vw,58px);margin:10px 0 14px}
+  .tr .p-lead{font-size:clamp(14px,1.05vw,17px);max-width:40ch}
+
+  /* ---------- the treatments: a vertical loop of cards ----------
+     the cards slide straight down, one after the other, fading in under the text and leaving at the
+     bottom of the screen; the last one comes back in at the top. Position and fade are set in JS every
+     frame (on the spotlight copy too). The loop slows to a stop under the cursor and can be dragged.
+     First the four areas; clicking one swaps in the cards of its own treatments (same loop). */
+  .tr-crumb{display:flex;align-items:center;gap:12px;min-height:30px;margin-top:clamp(10px,2vh,22px)}
+  .tr-crumb .tc-tag{color:var(--muted)}
+  .tr-back{visibility:hidden}
+  .tr-text.series .tr-back{visibility:visible}
+  .tr-crumb .pill svg{width:12px;height:12px}
+  .tr-wheel{
+    position:relative;flex:1;min-height:300px;margin-top:clamp(8px,1.6vh,18px);
+    cursor:grab;user-select:none;-webkit-user-select:none;touch-action:pan-y;
+  }
+  .tr-wheel.drag{cursor:grabbing}
+  /* clipped to the wheel (a little wider for the shadows): nothing below it makes the section scroll */
+  .tr-list{list-style:none;margin:0;padding:0;position:absolute;inset:0 -32px;overflow:clip}
+  /* always the accent colour, whatever the theme (also in the spotlight copy) */
+  .tr-card{
+    position:absolute;top:50%;left:32px;right:32px;
+    display:grid;gap:10px;padding:13px 16px 15px;border-radius:var(--radius);
+    background:var(--accent);color:var(--on-accent);cursor:default;
+    --muted:rgba(4,25,30,.72);--line:rgba(4,25,30,.45);--line-soft:rgba(4,25,30,.22);
+    box-shadow:0 22px 44px -26px rgba(4,25,30,.55);
+    will-change:transform,opacity;
+    transition:background-color .35s,box-shadow .5s var(--ease);
+  }
+  .tr-card[data-branch]{cursor:pointer}
+  .tc-top{display:flex;align-items:center;gap:12px}
+  .tc-tag{flex:1;min-width:0;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tc-main{display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;align-items:start}
+  .tr-card .chi-ico{width:40px;height:40px;border-radius:10px}
+  .tr-card h3{margin:0 0 2px;font-weight:400;font-size:clamp(18px,1.4vw,22px);letter-spacing:-.01em;transition:transform .55s var(--spring)}
+  .tr-card p{margin:0;font-size:13px;line-height:1.4;color:var(--muted);font-weight:300;transition:color .4s,transform .55s var(--spring) .04s}
+  .tr-btn{flex:none;height:30px;margin:0;padding:0 12px;font-size:10.5px}
+  .tr-card .btn.ghost{color:var(--on-accent);--fill:var(--on-accent);--fill-ink:var(--accent)}
+  .tr-card .chi-ico svg{stroke:var(--on-accent)}
+  .tr-card .chi-ico::before{background:var(--on-accent)}
+  /* hover: a lighter card with a deeper shadow, the icon fills and pops, the text slides */
+  .tr-card:is(:hover,.is-hover){background:color-mix(in srgb,var(--accent) 86%,#fff);box-shadow:0 34px 60px -26px rgba(4,25,30,.7)}
+  .tr-card:is(:hover,.is-hover) .chi-ico{border-color:var(--on-accent);box-shadow:0 12px 24px -10px rgba(4,25,30,.6)}
+  .tr-card:is(:hover,.is-hover) .chi-ico svg{stroke:var(--accent);animation:icon-pop .7s var(--ease)}
+  .tr-card:is(:hover,.is-hover) h3,.tr-card:is(:hover,.is-hover) p{transform:translateX(5px)}
+  .tr-card:is(:hover,.is-hover) p{color:currentColor}
+  .tr-card:is(:hover,.is-hover) .chi-num{letter-spacing:.2em}
+  @keyframes icon-pop{0%,100%{transform:none}35%{transform:scale(1.22)}65%{transform:scale(.94)}}
+  @media (max-width:1100px),(max-aspect-ratio:13/10){
+    .tr{--ph:min(62svh,100vw,560px);display:block;min-height:0;padding:var(--ph) var(--gutter) 72px}
+    .tr-media{left:0;top:var(--bar-h);height:var(--ph)}
+    .tr-video{left:0;width:100%;object-position:42% 50%}
+    .tr-media::after{background:linear-gradient(var(--bg),transparent 14%,transparent 62%,var(--bg))}
+    .tr-text{display:block;width:auto;max-width:640px;height:auto}
+    .tr-wheel{flex:none;margin-top:24px}   /* height set in JS, from the cards' own height */
+  }
+  @media (max-width:560px){
+    .panel-bar .kicker{display:none}   /* room for the back button and the day/night switch */
+    .tr{--bar-h:calc(var(--gutter) * 2 + 32px)}
+    .tr-card{padding:12px 13px 14px}
+  }
+  .sticky{transform-origin:50% 50%;will-change:transform,opacity}
+  /* section content enters the viewport once the panel is open (animated in JS) */
+  .panel .rvl:not(.in):not(.p-title){opacity:0}
+  .p-title .ln{display:block;overflow:hidden;padding-bottom:.1em;margin-bottom:-.1em}
+  .p-title .ln > span{display:inline-block}
+  .p-title.rvl:not(.in) .ln > span{transform:translateY(110%)}
+  .p-title{font-size:clamp(44px,8vw,112px);font-weight:400;letter-spacing:-.04em;line-height:.92;margin:14px 0 26px}
+  .p-lead{font-size:clamp(18px,2vw,24px);font-weight:300;line-height:1.4;max-width:44ch;margin:0}
+  .p-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--gap);margin-top:44px}
+  .p-card{border:1px solid var(--line-soft);border-radius:var(--radius);padding:24px;background:var(--cell);scroll-margin-top:90px;transition:border-color .4s,box-shadow .4s}
+  .p-card.hl{border-color:var(--accent);box-shadow:0 0 0 3px rgba(95,179,198,.25)}
+  .p-card h3{margin:14px 0 8px;font-weight:400;font-size:22px;letter-spacing:-.01em}
+  .p-card p{margin:0 0 16px;color:var(--muted);font-weight:300;line-height:1.55}
+  .p-card .ico{width:30px;height:30px;fill:none;stroke:var(--accent);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+  .p-num{font-family:var(--mono);font-size:44px;letter-spacing:-.02em}
+  .p-split{display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(24px,5vw,72px);align-items:start;margin-top:40px}
+  .p-rows{list-style:none;margin:0;padding:0}
+  .p-rows li{display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-top:1px solid var(--line-soft);font-size:16px}
+  .p-rows li span:first-child{color:var(--muted);font-weight:300}
+  .p-map{width:100%;height:auto;border-radius:var(--radius);border:1px solid var(--line-soft);background:var(--cell)}
+  .p-map .road{stroke:var(--line-soft);stroke-width:10;fill:none;stroke-linecap:round}
+  .p-map .road.thin{stroke-width:4}
+  .p-map .pin{fill:var(--accent)}
+  .p-map .ring{fill:none;stroke:var(--accent);opacity:.35}
+
+  form{display:grid;gap:12px}
+  label{display:grid;gap:6px;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  input,select,textarea{
+    font:inherit;font-family:var(--sans);font-size:16px;text-transform:none;letter-spacing:0;
+    background:var(--bg);color:var(--fg);border:1px solid var(--line-soft);border-radius:8px;padding:12px 14px;
+  }
+  textarea{resize:vertical;min-height:90px}
+  input:focus,select:focus,textarea:focus,.is-focus{border-color:var(--accent);outline:none}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    margin-top:6px;height:46px;padding:0 20px;border-radius:8px;background:var(--fg);color:var(--on-fg);
+    font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;
+    border:1px solid transparent;--fill:var(--accent);--fill-ink:#000;
+  }
+  .btn.ghost{background:transparent;color:var(--fg);border-color:var(--line);--fill:var(--fg);--fill-ink:var(--on-fg)}
+  .ok{display:none;color:var(--accent);font-family:var(--mono);font-size:12px}
+  .ok.show{display:block;animation:in .6s var(--ease) both;opacity:0;translate:0 8px}
+
+  /* ---------- "PRENOTA": text on the left, a liquid glass form on the right ----------
+     soft accent-coloured lights drift behind the form so the glass has something to bend: frosted
+     backdrop (blur + saturation), a bright rim, an inner glow, and a sheen that follows the cursor.
+     A switch on top chooses between a question (message) and a visit request. */
+  .panel[data-sec="prenota"] .panel-body{max-width:none;padding:0}
+  /* no clip here: the lights fade out on their own (the section itself still clips at the screen edges) */
+  .pr{
+    --bar-h:calc(var(--gutter) * 2 + 30px);
+    position:relative;
+    display:grid;grid-template-columns:minmax(0,1fr) minmax(0,480px);gap:clamp(32px,6vw,110px);align-items:center;
+    min-height:calc(100svh - var(--bar-h));padding:0 clamp(var(--gutter),5vw,96px) var(--bar-h);
+  }
+  .pr-text{position:relative}
+  .pr .p-title{font-size:clamp(44px,6.4vw,108px)}
+  .pr-points{list-style:none;margin:34px 0 0;padding:0;display:grid;gap:14px;max-width:46ch}
+  .pr-points li{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:baseline;padding-top:14px;border-top:1px solid var(--line-soft)}
+  .pr-points b{font-family:var(--mono);font-weight:400;font-size:10.5px;letter-spacing:.08em;color:var(--accent)}
+  .pr-points span{font-weight:300;color:var(--muted);line-height:1.5}
+  .pr-points strong{font-weight:400;color:var(--fg)}
+  /* the lights behind the glass */
+  .pr{isolation:isolate}
+  .pr-text{grid-area:1/1}
+  /* same cell as the form; the lights spill out of it */
+  .pr-glow{grid-area:1/2;align-self:stretch;position:relative;z-index:-1;pointer-events:none;opacity:var(--glow-o)}
+  .lg{grid-area:1/2}
+  /* soft radial gradients that reach full transparency inside their own box (no blur filter: a blurred
+     layer this big costs a lot of GPU on every frame), placed so they never touch the screen edges */
+  .pr-glow i{position:absolute;aspect-ratio:1;border-radius:50%;will-change:transform}
+  .pr-glow i:nth-child(1){left:-14%;top:-4%;width:78%;background:radial-gradient(closest-side,var(--accent),rgba(95,179,198,.45) 45%,transparent);animation:drift-a 16s ease-in-out infinite alternate}
+  .pr-glow i:nth-child(2){left:36%;top:18%;width:72%;background:radial-gradient(closest-side,#2f8ea6,rgba(47,142,166,.4) 45%,transparent);animation:drift-b 19s ease-in-out infinite alternate}
+  .pr-glow i:nth-child(3){left:4%;top:46%;width:60%;background:radial-gradient(closest-side,#b9ecf5,rgba(185,236,245,.4) 45%,transparent);animation:drift-c 13s ease-in-out infinite alternate}
+  @keyframes drift-a{to{transform:translate(14%,10%) scale(1.08)}}
+  @keyframes drift-b{to{transform:translate(-18%,-10%) scale(.92)}}
+  @keyframes drift-c{to{transform:translate(14%,-18%) scale(1.12)}}
+
+  /* the glass */
+  .lg{
+    position:relative;isolation:isolate;gap:14px;
+    padding:clamp(20px,2.4vw,30px);border-radius:28px;
+    /* sheen that follows the cursor (--mx/--my set in JS), over the tinted glass */
+    background:radial-gradient(460px circle at var(--mx) var(--my),rgba(255,255,255,.2),transparent 60%),var(--glass);
+    -webkit-backdrop-filter:blur(24px) saturate(185%);backdrop-filter:blur(24px) saturate(185%);
+    box-shadow:
+      inset 0 1px 0 var(--glass-hi),
+      inset 0 0 0 1px var(--glass-rim),
+      inset 0 22px 44px -32px var(--glass-hi),
+      inset 0 -18px 36px -30px rgba(95,179,198,.5),
+      0 40px 90px -40px rgba(0,0,0,.55);
+  }
+  /* not inherited: moving the sheen restyles the glass only, not every field inside it */
+  @property --mx{syntax:'<length-percentage>';inherits:false;initial-value:80%}
+  @property --my{syntax:'<length-percentage>';inherits:false;initial-value:0%}
+  /* the spotlight copy never shows the form (the spotlight goes around it): no second frosted glass to compute */
+  .panel-alt .lg{-webkit-backdrop-filter:none;backdrop-filter:none}
+  .panel-alt .lg > *{visibility:hidden}
+  .lg::after{    /* rim: brighter where the light hits (top-left) and bounces (bottom-right) */
+    content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;
+    background:linear-gradient(135deg,rgba(255,255,255,.7),rgba(255,255,255,.08) 32%,rgba(255,255,255,0) 62%,rgba(255,255,255,.45));
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;
+    mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);
+  }
+  .lg :is(input,select,textarea){
+    width:100%;min-width:0;background:var(--glass-field);border-color:var(--glass-line);border-radius:14px;
+    transition:border-color .3s,background-color .3s,box-shadow .3s;
+  }
+  .lg :is(input,select,textarea):is(:focus,.is-focus){background:var(--glass-field-on);box-shadow:0 0 0 4px rgba(95,179,198,.2)}
+  .lg select option,.lg select optgroup{background:var(--bg);color:var(--fg)}
+  .lg textarea{min-height:120px}
+  .lg-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+  .lg fieldset{border:0;margin:0;padding:0;min-width:0;display:grid;gap:12px}
+  .lg fieldset[disabled]{display:none}
+  .lg fieldset:not([disabled]){animation:field-in .5s var(--ease)}
+  @keyframes field-in{from{opacity:0;translate:0 10px}}
+  .lg-send{margin-top:4px;height:50px;border-radius:14px}
+  .lg .ok{text-align:center}
+  /* the switch: message / visit, a glass knob slides under the chosen side */
+  .seg{
+    position:relative;display:grid;grid-template-columns:1fr 1fr;padding:4px;border-radius:999px;margin-bottom:4px;
+    background:var(--glass-field);box-shadow:inset 0 0 0 1px var(--glass-line),inset 0 1px 3px rgba(0,0,0,.18);
+  }
+  .seg button{
+    position:relative;z-index:1;height:42px;border-radius:999px;
+    font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
+    transition:color .35s;
+  }
+  .seg button[aria-checked="true"]{color:var(--fg)}
+  .seg button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+  .seg-knob{
+    position:absolute;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);border-radius:999px;pointer-events:none;
+    background:var(--glass-knob);
+    box-shadow:inset 0 1px 0 var(--glass-hi),inset 0 0 0 1px var(--glass-rim),0 8px 20px -10px rgba(0,0,0,.6);
+    transition:transform .6s var(--spring),scale .35s var(--spring);
+  }
+  .lg[data-mode="msg"] .seg-knob{transform:translateX(100%)}
+  .seg:active .seg-knob{scale:1.05 .9}
+  @media (hover:hover){ .seg button:not([aria-checked="true"]):hover{color:var(--fg)} }
+  @media (max-width:900px){
+    .pr{grid-template-columns:1fr;align-items:start;gap:36px;padding:8px var(--gutter) 72px}
+    .pr-glow,.lg{grid-area:2/1}
+  }
+  @media (max-width:420px){
+    .lg-row{grid-template-columns:1fr}
+  }
+
+  /* ---------- "DOVE SIAMO": text on the left, a 3D miniature of the neighbourhood on the right ----------
+     the map (MapLibre, drawn in JS) fills the right of the screen and fades out at its edges like an
+     island; the clinic is a pin with a label above pulsing rings lying on the ground. It turns slowly
+     on its own and can be dragged. The spotlight goes around it (its --hole is the same fade). */
+  .dv .fit-box{flex:none;width:min(100%,440px)}
+  .dv .p-title{font-size:clamp(40px,min(5.4vw,10svh),92px)}
+  .dv .p-lead{font-size:clamp(16px,1.3vw,20px)}
+  .dv-rows{margin-top:min(30px,3.5svh)}
+  .dv-rows li{font-size:15px;align-items:baseline}
+  .dv-rows li span:last-child{text-align:right}
+  .dv-cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:min(26px,3svh)}
+  .dv-cta .btn{margin:0}
+  .dv-stage{position:absolute;top:calc(-1 * var(--bar-h));right:0;width:calc(100% - clamp(360px,34vw,520px));height:100svh}
+  .dv-map{
+    --hole:radial-gradient(closest-side,#000 50%,rgba(0,0,0,.55) 75%,transparent);
+    position:absolute;inset:0;cursor:grab;touch-action:pan-y;user-select:none;-webkit-user-select:none;
+    -webkit-mask-image:var(--hole);mask-image:var(--hole);
+  }
+  .dv-map.drag{cursor:grabbing}
+  .dv-gl{position:absolute;inset:0;opacity:0;transition:opacity 1.2s var(--ease)}
+  .dv-gl canvas{outline:none}
+  .dv-map.ready .dv-gl{opacity:1}
+  /* while the map loads: the liquid loader; if it cannot load (offline): a drawing of the area */
+  .dv-load{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;transition:opacity .5s}
+  .dv-map:is(.ready,.failed,.blocked) + .dv-load{opacity:0}
+  .dv-fallback{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .8s}
+  .dv-map:is(.failed,.blocked) .dv-fallback{opacity:1}
+  /* no consent to the external map services yet: the drawing, and a button to load the map */
+  .dv-ask{
+    position:absolute;left:50%;top:50%;translate:-50% -50%;width:min(300px,80%);display:none;justify-items:center;gap:12px;
+    padding:18px;border-radius:18px;text-align:center;background:color-mix(in srgb,var(--bg) 80%,transparent);
+    -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:inset 0 0 0 1px var(--line-soft);
+  }
+  .dv-map.blocked ~ .dv-ask{display:grid}
+  .dv-map.blocked ~ .dv-ui :is(.dv-hint,.dv-zoom){visibility:hidden}
+  .dv-ask p{margin:0;font-size:13px;line-height:1.5;color:var(--muted);font-weight:300}
+  .dv-ask .btn{margin:0;height:40px}
+  .dv-fallback .road{stroke:var(--line-soft);stroke-width:10;fill:none;stroke-linecap:round}
+  .dv-fallback .road.thin{stroke-width:4}
+  .dv-fallback .pin{fill:var(--accent)}
+  .dv-fallback .ring{fill:none;stroke:var(--accent);opacity:.35}
+  /* controls under the island */
+  .dv-ui{
+    position:absolute;left:50%;bottom:clamp(18px,4.5vh,44px);translate:-50% 0;
+    display:flex;align-items:center;gap:14px;white-space:nowrap;
+  }
+  .dv-hint,.dv-credit{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .dv-hint{display:flex;align-items:center;gap:8px}
+  .dv-hint svg{width:14px;height:14px;fill:none;stroke:var(--accent);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+  .dv-credit{font-size:9px;opacity:.7;transition:opacity .3s}
+  .dv-credit:hover{opacity:1}
+  .dv-zoom{display:flex;border:1px solid var(--line-soft);border-radius:999px;overflow:hidden}
+  .dv-zoom button{width:36px;height:30px;font-size:16px;line-height:1;transition:background-color .3s,color .3s}
+  .dv-zoom button + button{border-left:1px solid var(--line-soft)}
+  .dv-zoom button:hover{background:var(--fg);color:var(--on-fg)}
+  .dv-zoom button:active{background:var(--accent);color:var(--on-accent)}
+  /* the clinic: label + pin on a stem (stands up), rings on the ground (tilted like the map in JS).
+     The map always turns around the clinic, so it stays still in the middle: no marker re-positioned
+     on every frame (that was rounded to whole pixels and made the pin shiver) */
+  .dv-mark{position:absolute;left:50%;top:50%;width:0;height:0;opacity:0;transition:opacity .6s;pointer-events:none}
+  .dv-map.ready ~ .dv-mark{opacity:1}
+  .dv-mark .dv-ring{position:absolute;left:-70px;top:-70px}
+  .dv-pin{position:absolute;left:0;bottom:0;translate:-50% 0;display:grid;justify-items:center}
+  .dv-map.ready ~ .dv-mark .dv-pin{animation:pin-in 1s var(--spring) .3s both}
+  .dv-tag{
+    display:grid;gap:3px;padding:9px 13px;border-radius:12px;background:var(--fg);color:var(--on-fg);text-align:center;
+    font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;
+    box-shadow:0 14px 34px -14px rgba(0,0,0,.7);
+  }
+  .dv-tag b{font-family:var(--sans);font-weight:500;font-size:14px;letter-spacing:0;text-transform:none}
+  .dv-pin svg{width:26px;height:26px;margin-top:8px;fill:var(--accent);filter:drop-shadow(0 4px 8px rgba(0,0,0,.35))}
+  .dv-pin i{width:2px;height:54px;background:linear-gradient(var(--accent),rgba(95,179,198,0))}
+  @keyframes pin-in{from{opacity:0;transform:translateY(-40px)}}
+  .dv-ring{width:140px;height:140px}
+  .dv-ring::before{content:"";position:absolute;inset:44%;border-radius:50%;background:var(--accent);box-shadow:0 0 0 8px rgba(95,179,198,.22)}
+  .dv-ring i{position:absolute;inset:0;border-radius:50%;border:2px solid var(--accent);opacity:0;animation:dv-ping 2.8s var(--ease) infinite}
+  .dv-ring i:nth-child(2){animation-delay:1.4s}
+  @keyframes dv-ping{from{opacity:1;transform:scale(.15)}to{opacity:0;transform:none}}
+  /* not enough room on the side: the map on top, the text below (still one screen) */
+  @media (max-width:900px),(max-aspect-ratio:1/1){
+    .dv.fit-page{flex-direction:column;padding:0 var(--gutter) 12px}
+    .dv-stage{position:relative;top:auto;right:auto;flex:none;width:auto;height:clamp(200px,40svh,520px);margin:0 calc(-1 * var(--gutter))}
+    .dv-ui{bottom:2px}
+    .dv .fit-box{flex:1;width:auto;max-width:560px}
+    .dv .p-title{font-size:clamp(34px,min(9vw,7svh),64px);margin:8px 0 12px}
+    .dv .p-lead{display:none}
+    .dv-rows{margin-top:6px}
+    .dv-rows li{font-size:14px;padding:10px 0}
+    .dv-mark{scale:.85}
+  }
+  @media (max-width:480px){
+    .dv-hint{font-size:0;gap:0}   /* icon only */
+    .dv-ui{gap:10px}
+  }
+
+  /* ---------- "CONTATTI": text and contacts on the left, the patients' reviews on the right ----------
+     the reviews run in a loop (down on a computer, sideways on a phone) and can be moved by hand:
+     wheel, drag, swipe. Position set in JS every frame (the list is there twice, see "the reviews") */
+  .ct.fit-page{gap:clamp(32px,5vw,96px)}
+  .ct .fit-box{flex:1 1 0}
+  .ct .fit{max-width:640px}
+  .ct .p-title{font-size:clamp(40px,min(6vw,11svh),104px);margin:min(14px,1.5svh) 0 min(20px,2.4svh)}
+  .ct .p-lead{font-size:clamp(15px,1.2vw,19px);max-width:40ch;margin-bottom:min(22px,2.6svh)}
+  .ct .p-split{margin-top:min(30px,3.4svh);grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:0 clamp(20px,3vw,40px)}
+  .ct .p-rows li{padding:min(14px,1.6svh) 0;font-size:15px}
+  .ct-rev{flex:0 0 min(44%,520px);display:flex;flex-direction:column;min-width:0;min-height:0;padding-top:min(28px,3svh)}
+  .rv-head{display:flex;align-items:center;gap:16px;padding-bottom:16px;border-bottom:1px solid var(--line-soft)}
+  .rv-score{font-size:clamp(44px,4vw,64px);font-weight:300;letter-spacing:-.04em;line-height:1}
+  .rv-head .stars{font-size:18px}
+  .rv-count{display:block;margin-top:6px;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  /* the stars are filled up to the rating (--r out of 5) */
+  .stars{
+    letter-spacing:2px;line-height:1;white-space:nowrap;
+    background:linear-gradient(90deg,var(--accent) calc(var(--r) * 20%),var(--line-soft) 0);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .rv-roll{
+    position:relative;flex:1;min-height:0;overflow:hidden;
+    cursor:grab;user-select:none;-webkit-user-select:none;touch-action:none;
+    -webkit-mask-image:linear-gradient(transparent,#000 10%,#000 90%,transparent);
+            mask-image:linear-gradient(transparent,#000 10%,#000 90%,transparent);
+  }
+  .rv-roll.drag{cursor:grabbing}
+  .rv-track{will-change:transform}
+  .rv-list{list-style:none;margin:0;padding:0 0 12px;display:grid;gap:12px}
+  .rv-card{padding:18px 20px;border:1px solid var(--line-soft);border-radius:var(--radius);background:var(--cell);transition:border-color .3s}
+  .rv-card:hover{border-color:var(--line)}
+  .rv-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .rv-top .stars{font-size:14px}
+  .rv-when{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  .rv-card p{margin:12px 0 14px;font-size:15px;line-height:1.5;font-weight:300}
+  .rv-who{display:flex;align-items:center;gap:10px;font-size:14px}
+  .rv-who b{font-weight:500}
+  .rv-who > span:last-child{margin-left:auto;font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  .rv-av{width:30px;height:30px;flex:none;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:var(--on-accent);font-size:13px;font-weight:500}
+  /* phones / narrow screens: text on top, the reviews below in a row that slides sideways */
+  @media (max-width:900px),(max-aspect-ratio:1/1){
+    .ct.fit-page{flex-direction:column;gap:12px;padding:0 var(--gutter) 14px}
+    .ct .fit-box{flex:1 1 auto}
+    .ct .p-lead{display:none}
+    .ct-rev{flex:none;padding-top:0;margin:0 calc(-1 * var(--gutter))}
+    .rv-head{padding:0 var(--gutter) 12px;gap:12px;border-bottom:0}
+    .rv-score{font-size:36px}
+    /* sideways: only horizontal swipes are taken over */
+    .rv-roll{flex:none;touch-action:pan-y;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+    .rv-track{display:flex;width:max-content}
+    .rv-list{display:flex;align-items:stretch;padding:0 12px 0 0}
+    .rv-card{width:min(78vw,300px);padding:14px 16px}
+    .rv-card p{font-size:14px;margin:10px 0 12px}
+  }
+
+  /* ---------- sections that always fit in one screen ("Contatti", "Dove siamo") ----------
+     no scrolling: if the screen is too short for the text block, it is scaled down to fit (--fit, set in JS) */
+  .panel:is([data-sec="contatti"],[data-sec="dove"]) .panel-body{max-width:none;padding:0}
+  .fit-page{
+    --bar-h:calc(var(--gutter) * 2 + 30px);
+    position:relative;display:flex;height:calc(100svh - var(--bar-h));
+    padding:0 clamp(var(--gutter),5vw,96px) min(var(--bar-h),6svh);
+  }
+  .fit-box{position:relative;flex:1;min-width:0;min-height:0;display:flex;align-items:center;overflow:clip;overflow-clip-margin:24px}
+  .fit{flex:none;width:100%;transform-origin:0 50%;scale:var(--fit,1)}
+  @media (max-width:560px){ .fit-page{--bar-h:calc(var(--gutter) * 2 + 32px)} }
+
+  /* ---------- FOOTER (one line under the grid) ---------- */
+  .site-foot{position:relative;padding:20px var(--gutter);border-top:1px solid var(--line-soft);background:var(--bg)}
+  .sf-bot{
+    display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-between;align-items:center;
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
+  }
+  .sf-bot nav{display:flex;flex-wrap:wrap;gap:8px 20px}
+  .lnk{font:inherit;letter-spacing:inherit;text-transform:inherit;color:inherit;text-decoration:underline;text-decoration-color:var(--line-soft);text-underline-offset:3px;transition:color .3s,text-decoration-color .3s}
+  .lnk:hover{color:var(--accent);text-decoration-color:currentColor}
+
+  /* ---------- PRIVACY / COOKIE TEXTS: a sheet that rises from the bottom, over anything ---------- */
+  html:has(.sheet[open]) body{overflow:hidden}
+  .sheet{
+    width:min(780px,calc(100% - 2 * var(--gutter)));max-width:none;height:min(88svh,920px);max-height:none;
+    margin:auto auto 0;padding:0;border:1px solid var(--line-soft);border-bottom:0;border-radius:24px 24px 0 0;
+    background:var(--bg);color:var(--fg);box-shadow:0 -30px 80px -30px rgba(0,0,0,.6);
+  }
+  .sheet[open]{display:flex;flex-direction:column}
+  .sheet::backdrop{background:rgba(0,0,0,.55);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+  .sheet-bar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px clamp(20px,4vw,40px);border-bottom:1px solid var(--line-soft)}
+  .sheet-body{flex:1;overflow-y:auto;overscroll-behavior:contain;padding:30px clamp(20px,4vw,40px) 56px}
+  .legal h2{margin:0 0 10px;font-size:clamp(32px,4.4vw,52px);font-weight:400;letter-spacing:-.035em;line-height:1}
+  .legal .upd{display:block;margin-bottom:26px;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .legal h3{margin:30px 0 8px;font-size:18px;font-weight:500;letter-spacing:-.01em}
+  .legal p,.legal li{margin:0 0 10px;color:var(--muted);font-weight:300;font-size:15px;line-height:1.65}
+  .legal ul{margin:0 0 10px;padding-left:20px}
+  .legal strong{color:var(--fg);font-weight:400}
+  .legal a{color:var(--fg);text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--line-soft)}
+  .legal .ph{font-style:normal;color:var(--accent)}     /* to be filled in with the clinic's real data */
+  .legal .note{padding:14px 16px;border:1px solid var(--line-soft);border-radius:12px;background:var(--cell)}
+  .legal table{width:100%;border-collapse:collapse;margin:6px 0 12px;font-size:14px}
+  .legal th,.legal td{padding:10px 8px;border-top:1px solid var(--line-soft);text-align:left;vertical-align:top;font-weight:300;color:var(--muted)}
+  .legal th{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:400}
+  .legal td:first-child{color:var(--fg);font-family:var(--mono);font-size:12.5px}
+  .legal .btn{margin-top:8px}
+  @media (max-width:560px){ .legal table, .legal tbody, .legal tr, .legal td{display:block} .legal thead{display:none} .legal td{border:0;padding:2px 0} .legal tr{padding:10px 0;border-top:1px solid var(--line-soft)} }
+
+  /* ---------- COOKIE BANNER: reject and accept weigh the same; the × closes it as a refusal ---------- */
+  .consent{
+    position:fixed;left:var(--gutter);bottom:var(--gutter);z-index:250;width:min(440px,calc(100% - 2 * var(--gutter)));
+    padding:22px 22px 20px;border-radius:20px;
+    background:color-mix(in srgb,var(--bg) 82%,transparent);
+    -webkit-backdrop-filter:blur(20px) saturate(160%);backdrop-filter:blur(20px) saturate(160%);
+    box-shadow:inset 0 0 0 1px var(--line-soft),0 30px 70px -30px rgba(0,0,0,.6);
+  }
+  .consent[hidden]{display:none}
+  .consent p{margin:0 28px 16px 0;font-size:14px;line-height:1.55;font-weight:300;color:var(--muted)}
+  .consent strong{color:var(--fg);font-weight:400}
+  .consent-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .consent-btns .btn{margin:0;height:42px}
+  .consent-x{position:absolute;top:12px;right:12px;width:30px;height:30px;border-radius:50%;font-size:18px;line-height:1;color:var(--muted);transition:background-color .3s,color .3s}
+  .consent-x:hover{background:var(--fg);color:var(--on-fg)}
+
+  /* ---------- "Prenota": privacy acceptance ---------- */
+  .lg-consent{display:flex;gap:10px;align-items:flex-start;font-family:var(--sans);font-size:12.5px;letter-spacing:0;text-transform:none;line-height:1.45;color:var(--muted);cursor:pointer}
+  .lg-consent input{flex:none;width:18px;height:18px;margin:1px 0 0;padding:0;accent-color:var(--accent);cursor:pointer}
+  .lg-consent .lnk{color:var(--fg)}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:860px){
+    .p-split{grid-template-columns:1fr}
+  }
+  @media (max-width:700px){
+    :root{--gap:8px;--radius:14px}
+    .grid{
+      grid-template-columns:1fr 1fr;
+      grid-template-rows:1.9fr 1.25fr .62fr 1fr;
+      grid-template-areas:
+        "hero hero"
+        "chi tratt"
+        "prenota prenota"
+        "contatti dove";
+    }
+    .cell{padding:12px;gap:6px}
+    .cell p{display:none}
+    .c-prenota p{display:block;font-size:12px}
+    .cell h3{font-size:16px}
+    .c-tratt h3{display:none}
+    .t-list li{padding:5px 0;font-size:12px;gap:7px}
+    .t-list svg{width:14px;height:14px}
+    .t-list span{display:none}
+    .cell-arrow{width:24px;height:24px;top:10px;right:10px}
+    .kicker{font-size:9.5px}
+    .big-line{font-size:13px}
+  }
+  @media (max-width:560px){
+    .hide-sm{display:none}
+    .pill{height:32px;padding:0 10px}
+    .switch{height:32px}
+    .knob{top:4px}
+    .wordmark{font-size:26vw;white-space:nowrap}
+    .tile{width:44px;height:44px}
+    .center{padding-top:clamp(24px,6vh,56px);text-align:center}
+    .sub{align-items:center}
+    .bg-video{object-position:65% center}
+  }
+</style>
+</head>
+<body>
+
+<!-- the "goo" filter of the loaders (defined once, used by every .goo) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <filter id="goo" x="-20%" y="-150%" width="140%" height="400%" color-interpolation-filters="sRGB">
+    <feGaussianBlur in="SourceGraphic" stdDeviation="2"/>
+    <feColorMatrix values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7"/>
+  </filter>
+</svg>
+<!-- first load -->
+<div class="loader" role="status" aria-label="Caricamento">
+  <svg class="goo" viewBox="0 0 116 24" aria-hidden="true"><g>
+    <circle cx="12" cy="12" r="6"/><circle cx="104" cy="12" r="6"/>
+    <circle class="sm" cx="31" cy="12" r="2.5" style="--i:0"/><circle class="sm" cx="46.5" cy="12" r="2.5" style="--i:1"/>
+    <circle class="sm" cx="58" cy="12" r="2.5" style="--i:2"/><circle class="sm" cx="69.5" cy="12" r="2.5" style="--i:3"/>
+    <circle class="sm" cx="85" cy="12" r="2.5" style="--i:4"/>
+    <circle class="mv" cx="12" cy="12" r="6.5"/>
+  </g></svg>
+</div>
+
+<main class="stage" id="stage">
+  <i class="snap" style="top:0" aria-hidden="true"></i><i class="snap snap-grid" aria-hidden="true"></i>
+  <div class="sticky">
+
+    <!-- GRID (composes around the hero while scrolling) -->
+    <div class="grid" id="grid">
+      <div class="cell-hero" aria-hidden="true"></div>
+
+      <a class="cell c-chi" href="#chi-siamo" data-panel="chi" style="--dx:90px;--dy:-30px;--rot:5deg">
+        <span class="cell-arrow" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M4 12 12 4M5.5 4H12v6.5"/></svg></span>
+        <span class="kicker"><b>01</b> · Chi siamo</span>
+        <div>
+          <h3>Una clinica costruita sulla fiducia</h3>
+          <p>Medici specialisti, protocolli chiari e un rapporto diretto con ogni paziente.</p>
+        </div>
+      </a>
+
+      <a class="cell c-tratt" href="#trattamenti" data-panel="trattamenti" style="--dx:110px;--dy:30px;--rot:-4deg">
+        <span class="cell-arrow" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M4 12 12 4M5.5 4H12v6.5"/></svg></span>
+        <div>
+          <span class="kicker"><b>02</b> · I trattamenti</span>
+          <h3>Quattro aree, un unico standard di cura</h3>
+        </div>
+        <ul class="t-list">
+          <li><svg viewBox="0 0 24 24"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11Z"/></svg>Dermatologia<span>A</span></li>
+          <li><svg viewBox="0 0 24 24"><path d="M7 3c-2.5 0-4 2-4 4.5 0 3 1.5 4.5 2 7 .5 3 1 6.5 2.5 6.5S9.5 17 12 17s3 4 4.5 4S18.5 17.5 19 14.5c.5-2.5 2-4 2-7C21 5 19.5 3 17 3c-2 0-3 1.2-5 1.2S9 3 7 3Z"/></svg>Odontoiatria<span>B</span></li>
+          <li><svg viewBox="0 0 24 24"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg>Fisioterapia<span>C</span></li>
+          <li><svg viewBox="0 0 24 24"><path d="M12 3v5M12 16v5M3 12h5M16 12h5M6.5 6.5l2.5 2.5M15 15l2.5 2.5M6.5 17.5 9 15M15 9l2.5-2.5"/></svg>Medicina estetica<span>D</span></li>
+        </ul>
+      </a>
+
+      <a class="cell c-prenota" href="#prenota" data-panel="prenota" style="--dx:-60px;--dy:90px;--rot:-5deg">
+        <span class="cell-arrow" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M4 12 12 4M5.5 4H12v6.5"/></svg></span>
+        <span class="kicker"><b>03</b> · Prenota</span>
+        <div>
+          <h3>Prenota una consulenza</h3>
+          <p>Ti ricontattiamo entro 24 ore.</p>
+        </div>
+      </a>
+
+      <a class="cell c-contatti" href="#contatti" data-panel="contatti" style="--dx:0px;--dy:110px;--rot:3deg">
+        <span class="cell-arrow" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M4 12 12 4M5.5 4H12v6.5"/></svg></span>
+        <span class="kicker"><b>04</b> · Contatti e orari</span>
+        <div>
+          <span class="status" data-status><i></i><em style="font-style:normal">—</em></span>
+          <div class="big-line" style="margin-top:8px">+39 02 0000 0000</div>
+          <p>Lun–Ven 8:30–19:30 · Sab 9:00–13:00</p>
+        </div>
+      </a>
+
+      <a class="cell c-dove" href="#dove-siamo" data-panel="dove" style="--dx:70px;--dy:90px;--rot:6deg">
+        <svg class="mini-map" viewBox="0 0 200 140" aria-hidden="true">
+          <path class="road" d="M-10 100 C 50 90, 90 60, 210 70"/>
+          <path class="road thin" d="M60 -10 L 95 150"/>
+          <path class="road thin" d="M140 -10 C 130 50, 150 90, 170 150"/>
+          <circle class="ring" cx="112" cy="72" r="22"/>
+          <path class="pin" d="M112 52c-7 0-12 5-12 12 0 9 12 20 12 20s12-11 12-20c0-7-5-12-12-12Zm0 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8Z"/>
+        </svg>
+        <span class="cell-arrow" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M4 12 12 4M5.5 4H12v6.5"/></svg></span>
+        <span class="kicker"><b>05</b> · Dove siamo</span>
+        <div>
+          <div class="big-line">Piazza Istria<br>Roma</div>
+          <p>A 4 minuti dalla metro B1.</p>
+        </div>
+      </a>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero" id="hero" aria-label="Clinica Esempio">
+      <div class="bg" aria-hidden="true">
+        <!-- src set in JS: the video of the current theme first, the one under the spotlight once it can play -->
+        <video class="bg-video" id="v-night" data-src="assets/hero.mp4" autoplay muted loop playsinline preload="auto"></video>
+        <video class="bg-video" id="v-day" data-src="assets/hero-reveal.mp4" autoplay muted loop playsinline preload="auto"></video>
+      </div>
+
+      <header class="top">
+        <div class="group">
+          <button class="switch rv" style="--d:0" id="theme" role="switch" aria-checked="false" aria-label="Modalità giorno">
+            <svg class="moon" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5 9.5A5.5 5.5 0 0 1 6.5 2.5a5.5 5.5 0 1 0 7 7Z"/></svg>
+            <svg class="sun" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3"/><path d="M8 1v1.5M8 13.5V15M1 8h1.5M13.5 8H15M3 3l1 1M12 12l1 1M3 13l1-1M12 4l1-1"/></svg>
+            <span class="knob" aria-hidden="true">
+              <svg class="moon" viewBox="0 0 16 16"><path d="M13.5 9.5A5.5 5.5 0 0 1 6.5 2.5a5.5 5.5 0 1 0 7 7Z"/></svg>
+              <svg class="sun" viewBox="0 0 16 16"><circle cx="8" cy="8" r="3"/><path d="M8 1v1.5M8 13.5V15M1 8h1.5M13.5 8H15M3 3l1 1M12 12l1 1M3 13l1-1M12 4l1-1"/></svg>
+            </span>
+          </button>
+          <button class="pill rv" style="--d:1" data-panel="prenota">Prenota<span class="hide-sm">&nbsp;visita</span></button>
+        </div>
+      </header>
+
+      <div class="center">
+        <h1 class="wordmark" aria-label="esempio">
+          <span class="ch">e</span><span class="ch">s</span><span class="ch">e</span><span class="ch">m</span><span class="ch">p</span><span class="ch i">ı<svg class="leaf" viewBox="0 0 26 36" aria-hidden="true"><path d="M13 36C3 28 0 18 4 9 7 3 14 0 24 0c2 10 1 20-4 27-2 3-4 6-7 9Z"/></svg></span><span class="ch">o</span>
+        </h1>
+        <div class="sub">
+          <div class="sub-row rv" style="--d:3">
+            <h2>Clinica Esempio</h2>
+            <button class="sq" aria-label="Scopri la clinica" data-panel="chi">
+              <svg viewBox="0 0 16 16"><path d="M4 12 12 4M5.5 4H12v6.5"/></svg>
+            </button>
+          </div>
+          <p class="tagline rv" style="--d:4">cura fondata su <b>struttura</b> e <b>fiducia</b></p>
+        </div>
+      </div>
+
+      <footer class="bottom">
+        <div class="tiles">
+          <button class="tile rv" style="--d:5" data-label="Dermatologia" data-panel="trattamenti" data-service="derm" aria-label="Dermatologia">
+            <svg viewBox="0 0 24 24"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11Z"/><path d="M9.5 14.5a2.5 2.5 0 0 0 2.5 2.5"/></svg>
+          </button>
+          <button class="tile rv" style="--d:6" data-label="Odontoiatria" data-panel="trattamenti" data-service="dent" aria-label="Odontoiatria">
+            <svg viewBox="0 0 24 24"><path d="M7 3c-2.5 0-4 2-4 4.5 0 3 1.5 4.5 2 7 .5 3 1 6.5 2.5 6.5S9.5 17 12 17s3 4 4.5 4S18.5 17.5 19 14.5c.5-2.5 2-4 2-7C21 5 19.5 3 17 3c-2 0-3 1.2-5 1.2S9 3 7 3Z"/></svg>
+          </button>
+          <button class="tile rv" style="--d:7" data-label="Fisioterapia" data-panel="trattamenti" data-service="fisio" aria-label="Fisioterapia">
+            <svg viewBox="0 0 24 24"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg>
+          </button>
+          <button class="tile rv" style="--d:8" data-label="Medicina estetica" data-panel="trattamenti" data-service="estetica" aria-label="Medicina estetica">
+            <svg viewBox="0 0 24 24"><path d="M12 3v5M12 16v5M3 12h5M16 12h5M6.5 6.5l2.5 2.5M15 15l2.5 2.5M6.5 17.5 9 15M15 9l2.5-2.5"/></svg>
+          </button>
+        </div>
+      </footer>
+    </section>
+
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="site-foot">
+  <div class="sf-bot">
+    <span>© <span data-year>2026</span> Clinica Esempio S.r.l. · P.IVA 00000000000 · Dir. sanitario Dott. [Nome Cognome]</span>
+    <nav aria-label="Note legali">
+      <button type="button" class="lnk" data-sheet="privacy">Privacy</button>
+      <button type="button" class="lnk" data-sheet="cookie">Cookie policy</button>
+      <button type="button" class="lnk" data-consent-open>Preferenze cookie</button>
+    </nav>
+  </div>
+</footer>
+
+<!-- COOKIE BANNER (shown until a choice is made; the choice is kept 6 months) -->
+<div class="consent" id="consent" role="dialog" aria-label="Preferenze cookie" hidden>
+  <button type="button" class="consent-x" data-consent-choice="0" aria-label="Chiudi e rifiuta">×</button>
+  <p><strong>Rispettiamo la tua privacy.</strong> Usiamo solo strumenti tecnici necessari al sito. Con il tuo consenso
+    carichiamo anche la <strong>mappa 3D</strong> di "Dove siamo", fornita da un servizio esterno che riceve il tuo indirizzo IP.
+    <button type="button" class="lnk" data-sheet="cookie">Cookie policy</button></p>
+  <div class="consent-btns">
+    <button type="button" class="btn ghost mag" data-consent-choice="0">Rifiuta</button>
+    <button type="button" class="btn ghost mag" data-consent-choice="1">Accetta</button>
+  </div>
+</div>
+
+<!-- PRIVACY / COOKIE TEXTS -->
+<dialog class="sheet" id="sheet" aria-labelledby="sheet-title">
+  <div class="sheet-bar">
+    <span class="kicker" id="sheet-kicker"></span>
+    <button type="button" class="pill mag" data-sheet-close>Chiudi</button>
+  </div>
+  <div class="sheet-body legal" id="sheet-body"></div>
+</dialog>
+
+<!-- FULL SECTION PANEL -->
+<div class="panel" id="panel" role="dialog" aria-modal="true" aria-labelledby="panel-title" hidden>
+  <div class="panel-tint" id="panel-tint" aria-hidden="true"></div>
+  <div class="panel-inner" id="panel-inner">
+    <div class="panel-bar">
+      <button class="pill back mag" id="panel-back">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5"/></svg>Torna alla griglia
+      </button>
+      <div class="group">
+        <span class="kicker" id="panel-kicker"></span>
+        <button class="switch p-switch mag" role="switch" aria-checked="false" aria-label="Modalità giorno">
+          <svg class="moon" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5 9.5A5.5 5.5 0 0 1 6.5 2.5a5.5 5.5 0 1 0 7 7Z"/></svg>
+          <svg class="sun" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3"/><path d="M8 1v1.5M8 13.5V15M1 8h1.5M13.5 8H15M3 3l1 1M12 12l1 1M3 13l1-1M12 4l1-1"/></svg>
+          <span class="knob" aria-hidden="true">
+            <svg class="moon" viewBox="0 0 16 16"><path d="M13.5 9.5A5.5 5.5 0 0 1 6.5 2.5a5.5 5.5 0 1 0 7 7Z"/></svg>
+            <svg class="sun" viewBox="0 0 16 16"><circle cx="8" cy="8" r="3"/><path d="M8 1v1.5M8 13.5V15M1 8h1.5M13.5 8H15M3 3l1 1M12 12l1 1M3 13l1-1M12 4l1-1"/></svg>
+          </span>
+        </button>
+      </div>
+    </div>
+    <div class="panel-body" id="panel-body"></div>
+    <div class="panel-alt" id="panel-alt" aria-hidden="true" inert></div>
+  </div>
+</div>
+
+<!-- SECTION CONTENT -->
+<template id="tpl-chi">
+  <!-- photo in the middle (day / night version from --chi-img), text on its left, values on its right -->
+  <div class="chi">
+    <div class="chi-photo" aria-hidden="true"></div>
+    <ul class="chi-values">
+      <li class="chi-val">
+        <span class="chi-ico"><svg viewBox="0 0 24 24"><path class="bar" d="M5 20V10"/><path class="bar" d="M11 20V4"/><path class="bar" d="M17 20v-7"/><path d="M22 20H2"/></svg></span>
+        <div><span class="chi-num">01</span><h3>Struttura</h3><p>Percorsi definiti, tempi chiari e un medico di riferimento dall'inizio alla fine.</p></div>
+      </li>
+      <li class="chi-val">
+        <span class="chi-ico"><svg viewBox="0 0 24 24"><g class="eye"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12Z"/><circle class="pupil" cx="12" cy="12" r="3"/></g></svg></span>
+        <div><span class="chi-num">02</span><h3>Trasparenza</h3><p>Preventivi scritti, alternative spiegate e nessuna sorpresa durante il trattamento.</p></div>
+      </li>
+      <li class="chi-val">
+        <span class="chi-ico"><svg viewBox="0 0 24 24"><path class="heart" d="M12 21s-7.5-4.6-9.3-9.6C1.4 7.8 3.7 4.5 7 4.5c2.1 0 3.6 1.2 5 3 1.4-1.8 2.9-3 5-3 3.3 0 5.6 3.3 4.3 6.9C19.5 16.4 12 21 12 21Z"/></svg></span>
+        <div><span class="chi-num">03</span><h3>Fiducia</h3><p>Controlli periodici e un canale diretto con il team anche dopo la visita.</p></div>
+      </li>
+    </ul>
+    <div class="chi-text">
+      <span class="kicker"><b>01</b> · Chi siamo</span>
+      <h2 class="p-title" id="panel-title">Una clinica<br>costruita<br>sulla fiducia.</h2>
+      <p class="p-lead">Clinica Esempio è un centro multispecialistico che unisce protocolli clinici rigorosi e un rapporto diretto con il paziente.</p>
+      <p class="chi-team">Medici specialisti in dermatologia, odontoiatria, fisioterapia e medicina estetica, coordinati da un direttore sanitario.</p>
+      <button class="btn mag" data-panel="prenota">Prenota una consulenza<svg class="btn-ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+    </div>
+  </div>
+</template>
+
+<template id="tpl-trattamenti">
+  <!-- video on the right, text and the four treatments on the left -->
+  <div class="tr">
+    <div class="tr-media" aria-hidden="true">
+      <video class="tr-video tv-day" src="assets/tratt-day.mp4" muted loop playsinline preload="auto"></video>
+      <video class="tr-video tv-night" src="assets/tratt-night.mp4" muted loop playsinline preload="auto"></video>
+    </div>
+    <div class="tr-text">
+      <div class="tr-head">
+        <span class="kicker"><b>02</b> · I trattamenti</span>
+        <h2 class="p-title" id="panel-title">Quattro aree,<br>un unico standard.</h2>
+        <p class="p-lead">Ogni trattamento parte da una visita specialistica e segue protocolli condivisi tra i medici della clinica.</p>
+      </div>
+      <div class="tr-crumb">
+        <button class="pill back mag tr-back" data-series=""><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13 8H3M7 4 3 8l4 4"/></svg>Tutte le aree</button>
+        <span class="tc-tag tr-where">4 aree · scegline una per i trattamenti</span>
+      </div>
+      <div class="tr-wheel">
+        <ul class="tr-list">
+          <li class="tr-card" id="s-derm" data-branch="derm">
+            <div class="tc-top"><span class="chi-num">01</span><span class="tc-tag">Pelle · nei · capelli</span>
+              <button class="btn ghost mag tr-btn" data-series="derm">Trattamenti<svg class="btn-ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+            <div class="tc-main">
+              <span class="chi-ico"><svg viewBox="0 0 24 24"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11Z"/><path d="M9.5 14.5a2.5 2.5 0 0 0 2.5 2.5"/></svg></span>
+              <div><h3>Dermatologia</h3><p>Visite, mappatura dei nei, pelle, cuoio capelluto e unghie.</p></div>
+            </div>
+          </li>
+          <li class="tr-card" id="s-dent" data-branch="dent">
+            <div class="tc-top"><span class="chi-num">02</span><span class="tc-tag">Diagnostica digitale</span>
+              <button class="btn ghost mag tr-btn" data-series="dent">Trattamenti<svg class="btn-ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+            <div class="tc-main">
+              <span class="chi-ico"><svg viewBox="0 0 24 24"><path d="M7 3c-2.5 0-4 2-4 4.5 0 3 1.5 4.5 2 7 .5 3 1 6.5 2.5 6.5S9.5 17 12 17s3 4 4.5 4S18.5 17.5 19 14.5c.5-2.5 2-4 2-7C21 5 19.5 3 17 3c-2 0-3 1.2-5 1.2S9 3 7 3Z"/></svg></span>
+              <div><h3>Odontoiatria</h3><p>Igiene, implantologia e ortodonzia invisibile.</p></div>
+            </div>
+          </li>
+          <li class="tr-card" id="s-fisio" data-branch="fisio">
+            <div class="tc-top"><span class="chi-num">03</span><span class="tc-tag">Recupero funzionale</span>
+              <button class="btn ghost mag tr-btn" data-series="fisio">Trattamenti<svg class="btn-ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+            <div class="tc-main">
+              <span class="chi-ico"><svg viewBox="0 0 24 24"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg></span>
+              <div><h3>Fisioterapia</h3><p>Riabilitazione post-operatoria e terapia manuale.</p></div>
+            </div>
+          </li>
+          <li class="tr-card" id="s-estetica" data-branch="estetica">
+            <div class="tc-top"><span class="chi-num">04</span><span class="tc-tag">Viso · corpo</span>
+              <button class="btn ghost mag tr-btn" data-series="estetica">Trattamenti<svg class="btn-ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+            <div class="tc-main">
+              <span class="chi-ico"><svg viewBox="0 0 24 24"><path d="M12 3v5M12 16v5M3 12h5M16 12h5M6.5 6.5l2.5 2.5M15 15l2.5 2.5M6.5 17.5 9 15M15 9l2.5-2.5"/></svg></span>
+              <div><h3>Medicina estetica</h3><p>Viso e corpo non invasivi: filler, biostimolazione e laser.</p></div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template id="tpl-prenota">
+  <!-- text on the left, liquid glass form on the right -->
+  <div class="pr">
+    <div class="pr-glow" aria-hidden="true"><i></i><i></i><i></i></div>
+    <div class="pr-text">
+      <span class="kicker"><b>03</b> · Prenota</span>
+      <h2 class="p-title" id="panel-title">Prenota una<br>consulenza.</h2>
+      <p class="p-lead">Richiedi una visita o scrivici per un chiarimento: un membro del team ti risponde entro 24 ore.</p>
+      <ul class="pr-points">
+        <li><b>01</b><span><strong>Risposta entro 24 ore</strong>, via email o telefono, nei giorni feriali.</span></li>
+        <li><b>02</b><span><strong>Nessun impegno</strong>: chiedere informazioni o una visita è gratuito.</span></li>
+        <li><b>03</b><span><strong>Riservatezza</strong>: i tuoi dati restano tra te e la clinica.</span></li>
+      </ul>
+    </div>
+    <form class="booking lg" data-mode="book" method="post">
+      <div class="seg" role="radiogroup" aria-label="Tipo di richiesta">
+        <button type="button" role="radio" aria-checked="true" data-mode="book">Prenota una visita</button>
+        <button type="button" role="radio" aria-checked="false" data-mode="msg" tabindex="-1">Invia un messaggio</button>
+        <span class="seg-knob"></span>
+      </div>
+      <div class="lg-row">
+        <label>Nome<input name="nome" required maxlength="80" autocomplete="given-name"></label>
+        <label>Cognome<input name="cognome" required maxlength="80" autocomplete="family-name"></label>
+      </div>
+      <label>Email o telefono<input name="contatto" required maxlength="120" autocomplete="email"
+        pattern="[^@\s]+@[^@\s]+\.[^@\s]+|\+?[0-9][0-9 .\-\/\(\)]{5,}" title="Inserisci un indirizzo email o un numero di telefono"></label>
+      <fieldset data-only="book">
+        <label>Visita d'interesse
+          <select name="visita" required><option value="" disabled selected>Scegli una visita</option></select>
+        </label>
+      </fieldset>
+      <fieldset data-only="msg" disabled>
+        <label>Messaggio<textarea name="messaggio" required maxlength="2000" placeholder="Scrivi qui la tua domanda"></textarea></label>
+      </fieldset>
+      <label class="lg-consent"><input type="checkbox" name="privacy" required>
+        <span>Ho letto l'<button type="button" class="lnk" data-sheet="privacy">informativa sulla privacy</button> e acconsento
+          al trattamento dei miei dati, anche relativi alla salute, per gestire la richiesta.</span></label>
+      <button class="btn mag lg-send" type="submit">Richiedi la visita<svg class="btn-ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+      <p class="ok" role="status"></p>
+    </form>
+  </div>
+</template>
+
+<template id="tpl-contatti">
+  <!-- text and contacts on the left, the patients' reviews on the right -->
+  <div class="ct fit-page"><div class="fit-box"><div class="fit">
+  <span class="kicker"><b>04</b> · Contatti e orari</span>
+  <h2 class="p-title" id="panel-title">Siamo qui<br>per te.</h2>
+  <p class="p-lead">Chiamaci, scrivici o passa in clinica: rispondiamo a ogni richiesta entro 24 ore.</p>
+  <span class="status" data-status><i></i><em style="font-style:normal">—</em></span>
+  <div class="p-split">
+    <ul class="p-rows">
+      <li><span>Telefono</span><a href="tel:+390200000000">+39 02 0000 0000</a></li>
+      <li><span>Email</span><a href="mailto:info@clinicaesempio.it">info@clinicaesempio.it</a></li>
+      <li><span>WhatsApp</span><a href="https://wa.me/393000000000" target="_blank" rel="noopener">+39 300 000 0000</a></li>
+    </ul>
+    <ul class="p-rows">
+      <li><span>Lunedì – Venerdì</span><span>8:30 – 19:30</span></li>
+      <li><span>Sabato</span><span>9:00 – 13:00</span></li>
+      <li><span>Domenica</span><span>Chiuso</span></li>
+    </ul>
+  </div>
+  </div></div>
+  <!-- REVIEWS: sample texts (the clinic is not connected yet), to be replaced with the real ones.
+       --r is the rating (stars filled), out of 5. The list runs in a loop (it is doubled in JS). -->
+  <section class="ct-rev" aria-label="Recensioni dei pazienti">
+    <div class="rv-head">
+      <span class="rv-score">4,9</span>
+      <div><span class="stars" style="--r:4.9" aria-label="4,9 stelle su 5">★★★★★</span>
+        <span class="rv-count">Media di 128 recensioni dei pazienti</span></div>
+    </div>
+    <div class="rv-roll"><div class="rv-track">
+      <ul class="rv-list">
+        <li class="rv-card"><div class="rv-top"><span class="stars" style="--r:5" aria-label="5 stelle su 5">★★★★★</span><span class="rv-when">2 settimane fa</span></div>
+          <p>Visita dermatologica puntuale e spiegata con calma. Il referto mi è arrivato lo stesso giorno.</p>
+          <div class="rv-who"><span class="rv-av">G</span><b>Giulia M.</b><span>Dermatologia</span></div></li>
+        <li class="rv-card"><div class="rv-top"><span class="stars" style="--r:5" aria-label="5 stelle su 5">★★★★★</span><span class="rv-when">1 mese fa</span></div>
+          <p>Avevo paura del dentista da anni: qui mi sono sentito ascoltato. Nessuna sorpresa sul preventivo.</p>
+          <div class="rv-who"><span class="rv-av">M</span><b>Marco T.</b><span>Odontoiatria</span></div></li>
+        <li class="rv-card"><div class="rv-top"><span class="stars" style="--r:5" aria-label="5 stelle su 5">★★★★★</span><span class="rv-when">3 settimane fa</span></div>
+          <p>Dopo l'operazione al ginocchio ho ripreso a correre in tre mesi. Fisioterapisti preparatissimi.</p>
+          <div class="rv-who"><span class="rv-av">L</span><b>Luca B.</b><span>Fisioterapia</span></div></li>
+        <li class="rv-card"><div class="rv-top"><span class="stars" style="--r:5" aria-label="5 stelle su 5">★★★★★</span><span class="rv-when">2 mesi fa</span></div>
+          <p>Risultato naturale, proprio quello che volevo. Mi hanno spiegato ogni passaggio prima di iniziare.</p>
+          <div class="rv-who"><span class="rv-av">S</span><b>Sara P.</b><span>Medicina estetica</span></div></li>
+        <li class="rv-card"><div class="rv-top"><span class="stars" style="--r:5" aria-label="5 stelle su 5">★★★★★</span><span class="rv-when">1 settimana fa</span></div>
+          <p>Prenotazione semplice e richiamata entro poche ore. Studio pulitissimo e accogliente.</p>
+          <div class="rv-who"><span class="rv-av">F</span><b>Francesca D.</b><span>Prima visita</span></div></li>
+        <li class="rv-card"><div class="rv-top"><span class="stars" style="--r:4" aria-label="4 stelle su 5">★★★★★</span><span class="rv-when">1 mese fa</span></div>
+          <p>Ottimo rapporto con il medico e tempi rispettati. Un po' di attesa per il parcheggio, ma ne vale la pena.</p>
+          <div class="rv-who"><span class="rv-av">P</span><b>Paolo C.</b><span>Fisioterapia</span></div></li>
+        <li class="rv-card"><div class="rv-top"><span class="stars" style="--r:5" aria-label="5 stelle su 5">★★★★★</span><span class="rv-when">3 mesi fa</span></div>
+          <p>Allineatori trasparenti per mia figlia: seguita passo passo, sempre disponibili per ogni dubbio.</p>
+          <div class="rv-who"><span class="rv-av">E</span><b>Elena R.</b><span>Odontoiatria</span></div></li>
+        <li class="rv-card"><div class="rv-top"><span class="stars" style="--r:5" aria-label="5 stelle su 5">★★★★★</span><span class="rv-when">5 giorni fa</span></div>
+          <p>Mappatura dei nei precisa, con le immagini salvate per il controllo successivo. Consigliata.</p>
+          <div class="rv-who"><span class="rv-av">A</span><b>Andrea L.</b><span>Dermatologia</span></div></li>
+      </ul>
+    </div></div>
+  </section>
+  </div>
+</template>
+
+<template id="tpl-dove">
+  <!-- text on the left, a 3D miniature of the neighbourhood on the right (drawn in JS, see "Dove siamo") -->
+  <div class="dv fit-page">
+    <div class="dv-stage">
+      <div class="dv-map" role="img" aria-label="Mappa 3D della zona di Piazza Istria, Roma">
+        <!-- shown until the 3D map is ready (and if it cannot load) -->
+        <svg class="dv-fallback" viewBox="0 0 400 280" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <path class="road" d="M-20 200 C 100 180, 180 120, 420 140"/>
+          <path class="road thin" d="M120 -20 L 190 300"/>
+          <path class="road thin" d="M280 -20 C 260 100, 300 180, 340 300"/>
+          <path class="road thin" d="M-20 70 L 420 40"/>
+          <circle class="ring" cx="224" cy="144" r="44"/>
+          <path class="pin" d="M224 104c-14 0-24 10-24 24 0 18 24 40 24 40s24-22 24-40c0-14-10-24-24-24Zm0 32a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z"/>
+        </svg>
+        <div class="dv-gl"></div>
+      </div>
+      <div class="dv-load" aria-hidden="true">
+        <svg class="goo" viewBox="0 0 116 24"><g>
+          <circle cx="12" cy="12" r="6"/><circle cx="104" cy="12" r="6"/>
+          <circle class="sm" cx="31" cy="12" r="2.5" style="--i:0"/><circle class="sm" cx="46.5" cy="12" r="2.5" style="--i:1"/>
+          <circle class="sm" cx="58" cy="12" r="2.5" style="--i:2"/><circle class="sm" cx="69.5" cy="12" r="2.5" style="--i:3"/>
+          <circle class="sm" cx="85" cy="12" r="2.5" style="--i:4"/>
+          <circle class="mv" cx="12" cy="12" r="6.5"/>
+        </g></svg>
+      </div>
+      <div class="dv-ask">
+        <p>La mappa 3D usa un servizio esterno (OpenFreeMap) che riceve il tuo indirizzo IP.</p>
+        <button type="button" class="btn ghost mag" data-map-ok>Mostra la mappa</button>
+      </div>
+      <!-- the clinic, in the middle of the map (outside its fade, so the label is never faded out) -->
+      <div class="dv-mark" aria-hidden="true">
+        <div class="dv-ring"><i></i><i></i></div>
+        <div class="dv-pin"><span class="dv-tag"><b>Clinica Esempio</b>Piazza Istria</span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg><i></i></div>
+      </div>
+      <div class="dv-ui">
+        <span class="dv-hint"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 8a5.5 5.5 0 0 1 10-3.2M13.5 8a5.5 5.5 0 0 1-10 3.2M12.5 2v3h-3M3.5 14v-3h3"/></svg>Trascina per ruotare</span>
+        <div class="dv-zoom">
+          <button type="button" data-zoom="1" aria-label="Avvicina">+</button>
+          <button type="button" data-zoom="-1" aria-label="Allontana">−</button>
+        </div>
+        <a class="dv-credit" href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap · OpenFreeMap</a>
+      </div>
+    </div>
+    <div class="fit-box"><div class="dv-text fit">
+      <span class="kicker"><b>05</b> · Dove siamo</span>
+      <h2 class="p-title" id="panel-title">Piazza Istria,<br>Roma.</h2>
+      <p class="p-lead">Nel quartiere Trieste, a due passi da Corso Trieste e dalla metro B1.</p>
+      <ul class="p-rows dv-rows">
+        <li><span>Indirizzo</span><span>Piazza Istria · 00199 Roma</span></li>
+        <li><span>Metro</span><span>B1 Sant'Agnese/Annibaliano · 4 min a piedi</span></li>
+        <li><span>Auto</span><span>Parcheggio convenzionato nelle vicinanze</span></li>
+        <li><span>Accessibilità</span><span>Ingresso senza barriere e ascensore</span></li>
+      </ul>
+      <div class="dv-cta">
+        <a class="btn mag" href="https://www.google.com/maps/dir/?api=1&amp;destination=41.923,12.512825" target="_blank" rel="noopener">Indicazioni<svg class="btn-ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+        <a class="btn ghost mag" href="https://www.google.com/maps/search/?api=1&amp;query=Piazza+Istria+Roma" target="_blank" rel="noopener">Apri in Google Maps</a>
+      </div>
+    </div></div>
+  </div>
+</template>
+
+<!-- LEGAL TEXTS (drafts: the parts in .ph are to be filled in with the clinic's data, and the whole text
+     checked by whoever handles the clinic's privacy before going online) -->
+<template id="tpl-privacy">
+  <h2 id="sheet-title">Informativa sulla privacy</h2>
+  <span class="upd">Ultimo aggiornamento: <em class="ph">[data]</em></span>
+  <p>Questa informativa spiega come Clinica Esempio tratta i dati personali di chi visita il sito e di chi ci contatta o richiede
+    una visita tramite i moduli, ai sensi degli artt. 13 e 14 del Regolamento (UE) 2016/679 ("GDPR").</p>
+
+  <h3>1. Titolare del trattamento</h3>
+  <p><strong>Clinica Esempio S.r.l.</strong>, Piazza Istria, 00199 Roma · P.IVA <em class="ph">[00000000000]</em> ·
+    email <a href="mailto:privacy@clinicaesempio.it">privacy@clinicaesempio.it</a> · PEC <em class="ph">[indirizzo PEC]</em>.</p>
+  <p>Responsabile della protezione dei dati (DPO): <em class="ph">[nome e contatto del DPO]</em>.</p>
+
+  <h3>2. Quali dati trattiamo</h3>
+  <ul>
+    <li><strong>Dati che ci fornisci</strong> con i moduli "Prenota una visita" e "Invia un messaggio": nome, cognome,
+      email o telefono, la visita che ti interessa e il testo del messaggio. Questi dati possono rivelare informazioni
+      sulla tua salute (ad esempio il tipo di visita richiesta).</li>
+    <li><strong>Dati di navigazione</strong>: i sistemi che fanno funzionare il sito registrano dati tecnici come indirizzo IP,
+      data e ora della richiesta e tipo di browser, usati solo per il funzionamento e la sicurezza del sito.</li>
+    <li><strong>Preferenze</strong> salvate nel tuo browser (tema giorno/notte, scelta sui cookie): vedi la cookie policy.</li>
+  </ul>
+
+  <h3>3. Perché li trattiamo e su quale base</h3>
+  <ul>
+    <li><strong>Rispondere alle tue domande</strong> e ricontattarti: esecuzione di misure precontrattuali richieste da te
+      (art. 6.1.b GDPR).</li>
+    <li><strong>Gestire la prenotazione della visita</strong>: art. 6.1.b GDPR e, per i dati relativi alla salute, il tuo
+      consenso (art. 9.2.a GDPR), espresso con la casella del modulo, e le finalità di cura (art. 9.2.h GDPR).</li>
+    <li><strong>Adempiere a obblighi di legge</strong> (ad esempio fiscali e sanitari): art. 6.1.c GDPR.</li>
+    <li><strong>Sicurezza del sito</strong> e prevenzione di abusi: legittimo interesse del Titolare (art. 6.1.f GDPR).</li>
+  </ul>
+  <p>Fornire i dati è facoltativo, ma senza di essi non possiamo rispondere alla richiesta. Non usiamo i tuoi dati per
+    marketing né per decisioni automatizzate o profilazione.</p>
+
+  <h3>4. Per quanto tempo li conserviamo</h3>
+  <ul>
+    <li>Richieste non seguite da una visita: <em class="ph">[12 mesi]</em> dall'ultimo contatto.</li>
+    <li>Dati legati alle prestazioni sanitarie: per i tempi previsti dalla normativa sanitaria e fiscale.</li>
+    <li>Dati tecnici di navigazione: <em class="ph">[7 giorni]</em>, salvo necessità di accertare abusi.</li>
+  </ul>
+
+  <h3>5. Chi può vederli</h3>
+  <p>Il personale della clinica autorizzato e istruito, e i fornitori che ci aiutano a gestire il sito e le comunicazioni
+    (hosting, email: <em class="ph">[elenco dei fornitori]</em>), nominati responsabili del trattamento (art. 28 GDPR).
+    I dati non vengono diffusi. Se un fornitore si trova fuori dall'Unione Europea, il trasferimento avviene solo con le
+    garanzie previste dal GDPR (ad esempio decisioni di adeguatezza o clausole contrattuali standard).</p>
+
+  <h3>6. I tuoi diritti</h3>
+  <p>Puoi chiedere in qualsiasi momento l'accesso ai tuoi dati, la rettifica, la cancellazione, la limitazione del
+    trattamento, la portabilità e opporti al trattamento (artt. 15–22 GDPR), e revocare il consenso senza effetto sui
+    trattamenti già svolti. Scrivi a <a href="mailto:privacy@clinicaesempio.it">privacy@clinicaesempio.it</a>.</p>
+  <p>Se ritieni che il trattamento violi la normativa, puoi proporre reclamo al
+    <a href="https://www.garanteprivacy.it" target="_blank" rel="noopener">Garante per la protezione dei dati personali</a>.</p>
+
+  <h3>7. Minori</h3>
+  <p>Le richieste che riguardano minori di 14 anni devono essere inviate da chi esercita la responsabilità genitoriale.</p>
+
+  <h3>8. Modifiche</h3>
+  <p>Possiamo aggiornare questa informativa; la data in alto indica l'ultima versione.</p>
+</template>
+
+<template id="tpl-cookie">
+  <h2 id="sheet-title">Cookie policy</h2>
+  <span class="upd">Ultimo aggiornamento: <em class="ph">[data]</em></span>
+  <p>I cookie e gli strumenti simili (come la memoria locale del browser, "localStorage") sono piccoli dati che un sito
+    salva sul tuo dispositivo. Questo sito <strong>non usa cookie di profilazione né statistiche</strong>: usa solo
+    strumenti tecnici e, se lo accetti, i servizi esterni della mappa 3D.</p>
+
+  <h3>Strumenti tecnici (sempre attivi)</h3>
+  <p>Sono necessari al funzionamento del sito e non richiedono consenso (art. 122 del Codice privacy).</p>
+  <table>
+    <thead><tr><th>Nome</th><th>Tipo</th><th>A cosa serve</th><th>Durata</th></tr></thead>
+    <tbody>
+      <tr><td>theme</td><td>localStorage</td><td>Ricorda se hai scelto il tema giorno o notte</td><td>Finché non lo cancelli</td></tr>
+      <tr><td>consent</td><td>localStorage</td><td>Ricorda la tua scelta su questo banner</td><td>6 mesi</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Servizio esterno della mappa 3D (solo con il tuo consenso)</h3>
+  <p>Le mappe della zona mostrate in "Dove siamo" vengono caricate da un servizio di terze parti, che riceve il tuo
+    indirizzo IP e dati tecnici del browser per inviarti i file richiesti. Il programma che disegna la mappa è invece
+    salvato sul sito. Senza consenso al posto della mappa vedi un disegno della zona.</p>
+  <table>
+    <thead><tr><th>Servizio</th><th>Fornitore</th><th>A cosa serve</th><th>Informativa</th></tr></thead>
+    <tbody>
+      <tr><td>OpenFreeMap</td><td>OpenFreeMap (dati © OpenStreetMap)</td><td>Le mappe della zona</td><td><a href="https://openfreemap.org/" target="_blank" rel="noopener">Sito</a></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Caratteri tipografici</h3>
+  <p>I caratteri del sito sono salvati sul sito stesso: per mostrarli non viene contattato nessun servizio esterno.</p>
+
+  <h3>Link esterni</h3>
+  <p>I pulsanti "Indicazioni" e "Apri in Google Maps" aprono il sito di Google solo se li usi; da quel momento vale
+    l'informativa di Google.</p>
+
+  <h3>Come cambiare la tua scelta</h3>
+  <p>Puoi cambiarla in qualsiasi momento, anche dal link "Preferenze cookie" in fondo al sito, oppure cancellare i dati
+    salvati dalle impostazioni del browser.</p>
+  <button type="button" class="btn ghost mag" data-consent-open>Modifica le preferenze</button>
+
+  <p class="note" style="margin-top:28px">Per tutto ciò che riguarda i dati personali vedi
+    l'<button type="button" class="lnk" data-sheet="privacy">informativa sulla privacy</button>.</p>
+</template>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

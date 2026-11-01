@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#000"/>
+  <!-- the leaf over the "ı" of the wordmark -->
+  <path fill="#5fb3c6" transform="translate(32 32) rotate(18) scale(1.2) translate(-13 -18)" d="M13 36C3 28 0 18 4 9 7 3 14 0 24 0c2 10 1 20-4 27-2 3-4 6-7 9Z"/>
+</svg>

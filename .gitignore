@@ -1,0 +1,24 @@
+# Local preview server and editor settings (not part of the site)
+.claude/
+.vscode/
+.idea/
+
+# Dependencies and build output
+node_modules/
+build/
+dist/
+.netlify/
+.vercel/
+
+# Secrets: only the example file may be committed
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+
+# Operating system files
+Thumbs.db
+desktop.ini
+.DS_Store
