@@ -22,18 +22,12 @@
     uniform vec4 map;            // uv scale and offset of one row
     uniform vec3 spot;           // x, y, radius in css px
     uniform float day, edge;     // day: 0 night .. 1 day; edge keeps each row from picking up colour from the other
-    uniform vec2 warp[6];        // the day row bent onto the night one: [height in night, same point in day], 0 .. 1
-    float bend(float y) {
-      for (int i = 0; i < 5; i++)
-        if (y <= warp[i + 1].x) return mix(warp[i].y, warp[i + 1].y, (y - warp[i].x) / max(warp[i + 1].x - warp[i].x, 1e-4));
-      return y;
-    }
     vec4 row(vec2 uv, float n) { return texture2D(t, vec2(uv.x, (clamp(uv.y, edge, 1. - edge) + n) * .5)); }
     void main() {
       vec2 uv = map.zw + v * map.xy, px = v * size;
       float d = day;
       if (spot.z > 0.) d = mix(d, 1. - d, .8 * (1. - smoothstep(.16, 1., distance(px, spot.xy) / spot.z)));
-      gl_FragColor = vec4(mix(row(uv, 0.).rgb, row(vec2(uv.x, bend(uv.y)), 1.).rgb, d), 1.);
+      gl_FragColor = vec4(mix(row(uv, 0.).rgb, row(uv, 1.).rgb, d), 1.);
     }`;
   // same length and curve as the colours of the page (.theme-anim: .6s, css "ease"), so it all changes as one
   const FADE_MS = 600;
@@ -45,7 +39,7 @@
     }
     return .3 * (1 - u) * (1 - u) * u + 3 * (1 - u) * u * u + u * u * u;
   }
-  function dualMedia(host, { file, video, cls, warp = [[0, 0], [1, 1]] }) {
+  function dualMedia(host, { file, video, cls }) {
     const canvas = document.createElement('canvas');
     canvas.className = cls;
     canvas.setAttribute('aria-hidden', 'true');
@@ -69,8 +63,7 @@
       const p = gl.getAttribLocation(prog, 'p');
       gl.enableVertexAttribArray(p);
       gl.vertexAttribPointer(p, 2, gl.FLOAT, false, 0, 0);
-      u = Object.fromEntries(['size', 'day', 'map', 'spot', 'edge', 'warp'].map(n => [n, gl.getUniformLocation(prog, n)]));
-      gl.uniform2fv(u.warp, [...warp, ...Array(6 - warp.length).fill(warp[warp.length - 1])].flat());
+      u = Object.fromEntries(['size', 'day', 'map', 'spot', 'edge'].map(n => [n, gl.getUniformLocation(prog, n)]));
       gl.bindTexture(gl.TEXTURE_2D, gl.createTexture());
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
@@ -333,10 +326,8 @@
     if (heroMedia) $$('video', content).forEach(v => v.remove());   // the stacked file takes their place
     panelBody.replaceChildren(content);
     if (heroMedia && id === 'trattamenti') sectionMedia = dualMedia($('.tr-media', panelBody), { file: 'assets/tratt-mobile', video: true, cls: 'tr-video' });
-    // two different faces: the man's eyes, nose, mouth and chin (measured on the 720 px tall photos) are moved
-    // onto the woman's, so the spotlight shows one face turning into the other instead of two faces at once
-    if (heroMedia && id === 'chi') sectionMedia = dualMedia($('.chi-photo', panelBody), { file: 'assets/chi-mobile', cls: 'chi-canvas',
-      warp: [[0, 0], [215, 211], [256, 240], [324, 295], [440, 430], [720, 720]].map(p => p.map(y => y / 720)) });
+    // "Chi siamo": no spotlight on the portrait, the canvas is only there to fade it with the rest of the page
+    if (heroMedia && id === 'chi') sectionMedia = dualMedia($('.chi-photo', panelBody), { file: 'assets/chi-mobile', cls: 'chi-canvas' });
     panelKicker.textContent = LABELS[id];
     updateStatus(panelBody);
     if (id === 'prenota') {
@@ -1547,9 +1538,9 @@
     // it keeps playing under a section (a phone may refuse to start it again without a touch), only not drawn
     if (heroMedia) heroMedia.frame(now, true, !panelReady);
 
-    // a section's background on touch screens: the same drift, kept inside the photo / video
+    // a section's background on touch screens: the same drift, kept inside the video ("Chi siamo" stays still)
     if (sectionMedia) {
-      sectionLit += ((panelReady && !calm.matches ? 1 : 0) - sectionLit) * ease(0.02, dt);
+      sectionLit += ((panelReady && !calm.matches && panel.dataset.sec !== 'chi' ? 1 : 0) - sectionLit) * ease(0.02, dt);
       const box = $('canvas', panelBody);
       const [x, y] = sectionDrift(now / 1000);
       sectionMedia.setSpot(x * box.clientWidth, y * box.clientHeight, sectionLit > 0.01 ? Math.min(box.clientWidth, box.clientHeight) * 0.55 * sectionLit : 0);
