@@ -263,6 +263,12 @@
             mask-image:linear-gradient(transparent,transparent);
     -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
   }
+  /* touch screens: one canvas shows both themes (see dualMedia), fed by a video the page never shows */
+  .dual-media video.bg-video{display:none}
+  .dual-src{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+  .dual-media canvas.tr-video{filter:none}
+  .chi-canvas{position:absolute;inset:0;width:100%;height:100%}
+  .dual-media .chi-photo::before,.dual-media .chi-photo::after{z-index:1}
   body.in-grid .hero{cursor:pointer}
   body.in-grid .hero button{cursor:pointer}
 

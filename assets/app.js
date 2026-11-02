@@ -3,20 +3,205 @@
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
   const html = document.documentElement;
+  const isTouch = matchMedia('(hover: none)').matches;
+
+  // ---------- touch screens: one file, both themes ----------
+  // Phones cannot keep two separate videos on the same frame, and every correction makes them stutter.
+  // So here one file holds both versions stacked (night on top, day below), loaded with a still of its
+  // first frame so it is never black, and WebGL shows them: the spotlight and the theme change are only
+  // a different mix of the same frame, so the two can never drift apart and the video never stops.
+  const DUAL_VERT = 'attribute vec2 p;varying vec2 v;void main(){v=vec2(p.x*.5+.5,.5-p.y*.5);gl_Position=vec4(p,0.,1.);}';
+  const DUAL_FRAG = `#ifdef GL_FRAGMENT_PRECISION_HIGH
+    precision highp float;
+    #else
+    precision mediump float;
+    #endif
+    varying vec2 v;
+    uniform sampler2D t;
+    uniform vec2 size, day;      // size: canvas in css px; day: theme outside and inside the wipe (0 night, 1 day)
+    uniform vec4 map, wipe;      // map: uv scale and offset of one row; wipe: x, y, radius (negative: none)
+    uniform vec3 spot;           // x, y, radius in css px
+    uniform float edge;          // keeps each row from picking up colour from the other one
+    vec4 row(vec2 uv, float n) { return texture2D(t, vec2(uv.x, (clamp(uv.y, edge, 1. - edge) + n) * .5)); }
+    void main() {
+      vec2 uv = map.zw + v * map.xy, px = v * size;
+      float d = wipe.z < 0. ? day.x : mix(day.x, day.y, 1. - smoothstep(wipe.z - 60., wipe.z, distance(px, wipe.xy)));
+      if (spot.z > 0.) d = mix(d, 1. - d, .8 * (1. - smoothstep(.16, 1., distance(px, spot.xy) / spot.z)));
+      gl_FragColor = vec4(mix(row(uv, 0.).rgb, row(uv, 1.).rgb, d), 1.);
+    }`;
+  const WIPE_MS = 700;
+  function dualMedia(host, { file, video, cls }) {
+    const canvas = document.createElement('canvas');
+    canvas.className = cls;
+    canvas.setAttribute('aria-hidden', 'true');
+    const gl = canvas.getContext('webgl', { antialias: false, powerPreference: 'low-power' });
+    if (!gl) return null;
+    let u = null, spotWas = false, fresh = false, sized = false, frameW = 0, frameH = 0, lastT = -1, lastDraw = 0, retry = 0, wipe = null;
+    let day = html.dataset.theme === 'day' ? 1 : 0;
+    const spot = { x: 0, y: 0, r: 0 };
+    function init() {
+      const prog = gl.createProgram();
+      [[gl.VERTEX_SHADER, DUAL_VERT], [gl.FRAGMENT_SHADER, DUAL_FRAG]].forEach(([type, src]) => {
+        const s = gl.createShader(type);
+        gl.shaderSource(s, src);
+        gl.compileShader(s);
+        gl.attachShader(prog, s);
+      });
+      gl.linkProgram(prog);
+      gl.useProgram(prog);
+      gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+      const p = gl.getAttribLocation(prog, 'p');
+      gl.enableVertexAttribArray(p);
+      gl.vertexAttribPointer(p, 2, gl.FLOAT, false, 0, 0);
+      u = Object.fromEntries(['size', 'day', 'map', 'wipe', 'spot', 'edge'].map(n => [n, gl.getUniformLocation(prog, n)]));
+      gl.bindTexture(gl.TEXTURE_2D, gl.createTexture());
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    }
+    init();
+    function upload(src, w, h) {
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, src);
+      if (frameW !== w) sized = false;
+      frameW = w; frameH = h / 2;
+      fresh = true;
+    }
+    const still = new Image();
+    let ready = new Promise(r => {
+      still.onload = () => { if (lastT < 0) upload(still, still.naturalWidth, still.naturalHeight); r(); };
+      still.onerror = r;
+    });
+    still.src = file + '.jpg';
+    let vid = null;
+    if (video) {
+      vid = document.createElement('video');
+      vid.className = 'dual-src';
+      vid.muted = true;
+      vid.loop = vid.playsInline = true;
+      vid.preload = 'auto';
+      vid.setAttribute('aria-hidden', 'true');
+      vid.src = file + '.mp4';
+      ready = new Promise(r => {
+        vid.addEventListener('canplay', r, { once: true });
+        vid.addEventListener('error', r, { once: true });
+      });
+      host.append(vid);
+    }
+    host.append(canvas);
+    const size = new ResizeObserver(() => { sized = false; });
+    size.observe(canvas);
+    canvas.addEventListener('webglcontextlost', e => e.preventDefault());
+    canvas.addEventListener('webglcontextrestored', () => {
+      init();
+      lastT = -1; sized = false;
+      if (still.naturalWidth) upload(still, still.naturalWidth, still.naturalHeight);
+    });
+    // what is on screen, as the page's own css would crop it: "cover" for videos, "auto N%" for the photo
+    function place() {
+      const W = canvas.clientWidth, H = canvas.clientHeight;
+      if (!W || !H || !frameW) return false;
+      const k = Math.min(devicePixelRatio, 2);
+      canvas.width = Math.round(W * k);
+      canvas.height = Math.round(H * k);
+      gl.viewport(0, 0, canvas.width, canvas.height);
+      const cs = getComputedStyle(video ? canvas : host);
+      const auto = !video && /auto (\d+)%/.exec(cs.backgroundSize);
+      const s = auto ? H * +auto[1] / 100 / frameH : Math.max(W / frameW, H / frameH);
+      const [px, py] = (video ? cs.objectPosition : cs.backgroundPosition).split(' ').map(n => parseFloat(n) / 100);
+      const uw = W / (s * frameW), uh = H / (s * frameH);
+      gl.uniform2f(u.size, W, H);
+      gl.uniform4f(u.map, uw, uh, (1 - uw) * px, (1 - uh) * py);
+      gl.uniform1f(u.edge, 1 / frameH);
+      sized = fresh = true;                             // resizing a canvas clears it
+      return true;
+    }
+    return {
+      ready,
+      setSpot(x, y, r) { spot.x = x; spot.y = y; spot.r = r; },
+      // the new theme grows as a circle from the switch; the video keeps playing underneath
+      setDay(next, x, y) {
+        if (wipe) day = wipe.to;
+        const r = canvas.getBoundingClientRect(), k = canvas.clientWidth / (r.width || 1);
+        const cx = (x - r.left) * k, cy = (y - r.top) * k, W = canvas.clientWidth, H = canvas.clientHeight;
+        wipe = { t0: performance.now(), x: cx, y: cy, to: next ? 1 : 0, R: Math.hypot(Math.max(cx, W - cx), Math.max(cy, H - cy)) + 60 };
+      },
+      kick() { if (vid && vid.dataset.on && vid.paused) vid.play().catch(() => {}); },
+      frame(now, play, show = play) {
+        if (vid) {
+          vid.dataset.on = play ? '1' : '';
+          if (!play) { if (!vid.paused) vid.pause(); }
+          else if (vid.paused && now > retry) { retry = now + 1000; vid.play().catch(() => {}); }
+          if (vid.readyState >= 2 && vid.currentTime !== lastT) {
+            lastT = vid.currentTime;
+            upload(vid, vid.videoWidth, vid.videoHeight);
+          }
+        }
+        if (wipe && (!show || now - wipe.t0 >= WIPE_MS)) { day = wipe.to; wipe = null; fresh = true; }
+        if (!show || !frameW || (!sized && !place())) return;
+        // the spotlight moves slowly: when it is the only change, 30 redraws a second are plenty
+        if (!fresh && !wipe && !((spot.r > 0 || spotWas) && now - lastDraw > 32)) return;
+        if (wipe) {
+          const k = (now - wipe.t0) / WIPE_MS, e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+          gl.uniform4f(u.wipe, wipe.x, wipe.y, wipe.R * e, 0);
+          gl.uniform2f(u.day, day, wipe.to);
+        } else {
+          gl.uniform4f(u.wipe, 0, 0, -1, 0);
+          gl.uniform2f(u.day, day, day);
+        }
+        gl.uniform3f(u.spot, spot.x, spot.y, spot.r);
+        gl.drawArrays(gl.TRIANGLES, 0, 3);
+        spotWas = spot.r > 0;
+        fresh = false;
+        lastDraw = now;
+      },
+      destroy() {
+        size.disconnect();
+        if (vid) { vid.pause(); vid.removeAttribute('src'); vid.load(); vid.remove(); }
+        canvas.remove();
+        const lose = gl.getExtension('WEBGL_lose_context');
+        if (lose) lose.loseContext();
+      },
+    };
+  }
+  // the slow, aimless drift of the spotlight on touch screens: a few overlapping waves with random
+  // speeds and starting points (x and y from 0 to 1): it never jumps and never repeats a path
+  function wanderer() {
+    const rnd = (a, b) => a + Math.random() * (b - a), T = Math.PI * 2;
+    const wave = () => { const a = T / rnd(19, 31), b = T / rnd(7, 12), p = rnd(0, T), q = rnd(0, T);
+      return t => .5 + .4 * (.68 * Math.sin(t * a + p) + .32 * Math.sin(t * b + q)); };
+    const x = wave(), y = wave();
+    return t => [x(t), y(t)];
+  }
+  const heroMedia = isTouch ? dualMedia($('.bg'), { file: 'assets/hero-mobile', video: true, cls: 'bg-video' }) : null;
+  html.classList.toggle('dual-media', !!heroMedia);
+  let sectionMedia = null, sectionLit = 0;
+  const sectionDrift = wanderer();
+  function dropSectionMedia() {
+    if (sectionMedia) sectionMedia.destroy();
+    sectionMedia = null;
+    sectionLit = 0;
+  }
+  // a browser that refused to start a video on its own accepts it during a touch
+  if (heroMedia) document.addEventListener('touchend', () => { heroMedia.kick(); if (sectionMedia) sectionMedia.kick(); }, { passive: true });
 
   // ---------- loading screen: until the hero video can play and the fonts are in (6 s at most) ----------
   {
     const t0 = performance.now();
     const day = html.dataset.theme === 'day';
     const vid = $(day ? '#v-day' : '#v-night'), other = $(day ? '#v-night' : '#v-day');
-    vid.src = vid.dataset.src;                          // the visible video alone at first: a shorter wait
-    const canPlay = new Promise(r => {
-      vid.addEventListener('canplay', r, { once: true });
-      vid.addEventListener('error', r, { once: true });
-    });
-    const loadOther = () => { if (!other.src) other.src = other.dataset.src; };
-    canPlay.then(loadOther);
-    setTimeout(loadOther, 6000);                        // whatever happens, the spotlight video comes too
+    let canPlay;
+    if (heroMedia) canPlay = heroMedia.ready;
+    else {
+      vid.src = vid.dataset.src;                        // the visible video alone at first: a shorter wait
+      canPlay = new Promise(r => {
+        vid.addEventListener('canplay', r, { once: true });
+        vid.addEventListener('error', r, { once: true });
+      });
+      const loadOther = () => { if (!other.src) other.src = other.dataset.src; };
+      canPlay.then(loadOther);
+      setTimeout(loadOther, 6000);                      // whatever happens, the spotlight video comes too
+    }
     Promise.race([Promise.all([canPlay, document.fonts && document.fonts.ready]), new Promise(r => setTimeout(r, 6000))])
       .then(() => setTimeout(() => {
         html.classList.remove('loading');
@@ -129,7 +314,12 @@
   function fill(id, service) {
     io.disconnect();
     dropMap();
-    panelBody.replaceChildren($('#tpl-' + id).content.cloneNode(true));
+    dropSectionMedia();
+    const content = $('#tpl-' + id).content.cloneNode(true);
+    if (heroMedia) $$('video', content).forEach(v => v.remove());   // the stacked file takes their place
+    panelBody.replaceChildren(content);
+    if (heroMedia && id === 'trattamenti') sectionMedia = dualMedia($('.tr-media', panelBody), { file: 'assets/tratt-mobile', video: true, cls: 'tr-video' });
+    if (heroMedia && id === 'chi') sectionMedia = dualMedia($('.chi-photo', panelBody), { file: 'assets/chi-mobile', cls: 'chi-canvas' });
     panelKicker.textContent = LABELS[id];
     updateStatus(panelBody);
     if (id === 'prenota') {
@@ -590,6 +780,15 @@
   function buildAlt() {
     twin = new Map();
     taSize.disconnect();
+    // touch screens have no cursor to follow: no second copy of the section, which a tap would uncover
+    // out of step with the original. The spotlight stays on the background (see dualMedia)
+    if (isTouch) {
+      panelAlt.replaceChildren();
+      panelVids = $$('video', panelBody);
+      panelVids.forEach(v => { v.muted = true; });      // a copied video is not muted by its attribute alone
+      leadVid = null;
+      return;
+    }
     const src = [panelBar, panelBody];
     const copies = src.map(n => n.cloneNode(true));
     panelAlt.replaceChildren(...copies);
@@ -716,6 +915,7 @@
       panel.getAnimations({ subtree: true }).forEach(a => a.cancel());
       panel.querySelectorAll('video').forEach(v => v.pause());   // no decoding while hidden
       dropMap();
+      dropSectionMedia();
       html.classList.remove('locked');
       closing = false;
       Object.assign(pull, { k: 0, target: 0, done: false, touch: false });
@@ -1002,13 +1202,12 @@
   const vDay = $('#v-day');
   let base, reveal;
   let scale = 1;                    // current hero scale (1 = full screen)
-  const isTouch = matchMedia('(hover: none)').matches;
 
   const TAIL = 10;
   const NONE = 'linear-gradient(transparent,transparent)';
   // alpha profile from centre (0) to edge (1): solid core, long progressive fade to nothing
   const STOPS = [[0, 1], [.16, 1], [.3, .9], [.44, .72], [.57, .5], [.69, .3], [.8, .15], [.9, .05], [1, 0]];
-  const radius = () => Math.max(170, Math.min(280, innerWidth * 0.19));
+  const radius = () => Math.max(170, Math.min(280, innerWidth * 0.19)) * (isTouch ? 0.85 : 1);
 
   function profile(t) {
     if (t >= 1) return 0;
@@ -1050,6 +1249,7 @@
   function spotsOf(s, ox = 0, oy = 0, size = 1) {
     if (s.lit <= 0) return [];
     const R = radius() * size * s.lit;
+    if (isTouch) return [{ x: s.x - ox, y: s.y - oy, r: R, a: 0.8 }];   // drifting slowly: no tail, and softer
     return [{ x: s.x - ox, y: s.y - oy, r: R, a: 1 }, ...s.trail.map((p, i) => {
       const f = 1 - (i + 1) / (TAIL + 1);
       return { x: p.x - ox, y: p.y - oy, r: R * (0.35 + 0.65 * f), a: 0.85 * f };
@@ -1103,7 +1303,7 @@
 
   const hs = makeSpot();   // hero: hero-local, unscaled px
   const ps = makeSpot();   // sections: viewport px
-  let intro = null;
+  const heroDrift = wanderer();
 
   // ---------- day / night ----------
   // night: black video is the base, white video is revealed; day: the opposite.
@@ -1126,15 +1326,17 @@
   setTheme(html.dataset.theme === 'day');
   function toggleTheme(btn) {
     const day = html.dataset.theme !== 'day';
-    if (!document.startViewTransition) {
-      html.classList.add('theme-anim');
-      setTheme(day);
-      setTimeout(() => html.classList.remove('theme-anim'), 650);
-      return;
-    }
     // the new theme grows as a circle out of the switch that was pressed
     const r = btn.getBoundingClientRect();
     const x = r.left + r.width / 2, y = r.top + r.height / 2;
+    // on touch screens that circle is drawn with the video itself: a page transition would freeze it
+    if (!document.startViewTransition || isTouch) {
+      html.classList.add('theme-anim');
+      setTheme(day);
+      [heroMedia, sectionMedia].forEach(m => { if (m) m.setDay(day, x, y); });
+      setTimeout(() => html.classList.remove('theme-anim'), 650);
+      return;
+    }
     const end = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
     const vt = document.startViewTransition(() => setTheme(day));
     vt.ready.then(() => html.animate(
@@ -1152,7 +1354,6 @@
   // mouse: follow in real time
   hero.addEventListener('pointerenter', e => {
     if (e.pointerType === 'touch') return;
-    intro = null;
     moveSpot(hs, ...local(e), hs.lit < 0.05);
     hs.target = 1;
   });
@@ -1165,8 +1366,7 @@
 
   // touch: tap to reveal (pointerup is cancelled when the gesture turns into a scroll)
   hero.addEventListener('pointerup', e => {
-    if (e.pointerType !== 'touch' || e.target.closest('button,a')) return;
-    intro = null;
+    if (isTouch || e.pointerType !== 'touch' || e.target.closest('button,a')) return;
     tapSpot(hs, ...local(e));
   });
 
@@ -1181,7 +1381,7 @@
     if (e.pointerType !== 'touch') ps.target = 0;
   });
   panel.addEventListener('pointerup', e => {
-    if (e.pointerType !== 'touch' || !sectionSpot() || e.target.closest('button,a,input,select,textarea,label')) return;
+    if (isTouch || e.pointerType !== 'touch' || !sectionSpot() || e.target.closest('button,a,input,select,textarea,label')) return;
     tapSpot(ps, e.clientX, e.clientY);
   });
 
@@ -1191,17 +1391,6 @@
     if (e.pointerType === 'touch') return;
     scrollTo({ top: 0, behavior: 'smooth' });
   });
-
-  // touch: automatic sweep on load, to hint that the hero can be tapped
-  if (isTouch) {
-    setTimeout(() => {
-      if (hs.lit > 0.05 || scale < 0.99) return;
-      const w = hero.clientWidth, h = hero.clientHeight;
-      intro = { t0: performance.now(), x0: w * 0.3, y0: h * 0.42, x1: w * 0.72, y1: h * 0.52, dur: 1800 };
-      moveSpot(hs, intro.x0, intro.y0, true);
-      hs.target = 1;
-    }, 1200);
-  }
 
   // text and buttons switch colour as the revealed (opposite) video gets close to them
   const targets = $$('.top .pill, .switch, .wordmark .ch, .sub h2, .sq, .tagline, .tile', hero)
@@ -1321,20 +1510,31 @@
     // the spotlight rests while the hero is flying into the grid: redrawing it there costs frames
     const inFlight = prog > 0.002 && prog < 0.62;
 
-    if (intro) {
-      const k = Math.min(1, (now - intro.t0) / intro.dur);
-      const e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
-      moveSpot(hs, intro.x0 + (intro.x1 - intro.x0) * e, intro.y0 + (intro.y1 - intro.y0) * e);
-      if (k === 1) { intro = null; hs.target = 0; }
+    // touch screens: no cursor, the spotlight drifts on its own once the hero has come in
+    if (isTouch) {
+      const [x, y] = heroDrift(now / 1000);
+      moveSpot(hs, x * hero.clientWidth, y * hero.clientHeight);
+      hs.target = html.classList.contains('loading') || calm.matches ? 0 : 1;
     }
 
     // hero spotlight (off while flying, and while a section covers the hero)
-    stepSpot(hs, inFlight || panelOpen ? 0 : hs.target, inFlight ? 0.3 : 0.14, dt);
+    stepSpot(hs, inFlight || panelOpen ? 0 : hs.target, isTouch ? 0.02 : inFlight ? 0.3 : 0.14, dt);
     if (hs.lit > 0 || hs.was) {
       const spots = spotsOf(hs);
-      paintMask(reveal, spots);
+      if (heroMedia) heroMedia.setSpot(hs.x, hs.y, spots.length ? spots[0].r : 0);
+      else paintMask(reveal, spots);
       darken(spots);
       hs.was = hs.lit > 0;
+    }
+    if (heroMedia) heroMedia.frame(now, !panelReady);   // a section covers it: no decoding underneath
+
+    // a section's background on touch screens: the same drift, kept inside the photo / video
+    if (sectionMedia) {
+      sectionLit += ((panelReady && !calm.matches ? 1 : 0) - sectionLit) * ease(0.02, dt);
+      const box = $('canvas', panelBody);
+      const [x, y] = sectionDrift(now / 1000);
+      sectionMedia.setSpot(x * box.clientWidth, y * box.clientHeight, sectionLit > 0.01 ? Math.min(box.clientWidth, box.clientHeight) * 0.55 * sectionLit : 0);
+      sectionMedia.frame(now, panelReady, panelOpen);   // the still while it grows, the video once it has
     }
 
     // section spotlight: the opposite-theme copy scrolls with the section, the spot stays under the cursor
@@ -1354,7 +1554,7 @@
     if (panelOpen) { if (panelReady) syncPanelVideos(); stepWheel(dt); stepReviews(dt); stepPull(dt); stepMap(dt); }
 
     // keep the two videos on the same frame: nudge speed for small drift, seek for big jumps (loop restart)
-    if (!base.paused) {
+    if (!heroMedia && !base.paused) {
       const drift = base.currentTime - reveal.currentTime;
       if (Math.abs(drift) > 0.25) reveal.currentTime = base.currentTime;
       else reveal.playbackRate = 1 + Math.max(-0.1, Math.min(0.1, drift * 0.5));
