@@ -18,25 +18,40 @@
     #endif
     varying vec2 v;
     uniform sampler2D t;
-    uniform vec2 size, day;      // size: canvas in css px; day: theme outside and inside the wipe (0 night, 1 day)
-    uniform vec4 map, wipe;      // map: uv scale and offset of one row; wipe: x, y, radius (negative: none)
+    uniform vec2 size;           // canvas in css px
+    uniform vec4 map;            // uv scale and offset of one row
     uniform vec3 spot;           // x, y, radius in css px
-    uniform float edge;          // keeps each row from picking up colour from the other one
+    uniform float day, edge;     // day: 0 night .. 1 day; edge keeps each row from picking up colour from the other
+    uniform vec2 warp[6];        // the day row bent onto the night one: [height in night, same point in day], 0 .. 1
+    float bend(float y) {
+      for (int i = 0; i < 5; i++)
+        if (y <= warp[i + 1].x) return mix(warp[i].y, warp[i + 1].y, (y - warp[i].x) / max(warp[i + 1].x - warp[i].x, 1e-4));
+      return y;
+    }
     vec4 row(vec2 uv, float n) { return texture2D(t, vec2(uv.x, (clamp(uv.y, edge, 1. - edge) + n) * .5)); }
     void main() {
       vec2 uv = map.zw + v * map.xy, px = v * size;
-      float d = wipe.z < 0. ? day.x : mix(day.x, day.y, 1. - smoothstep(wipe.z - 60., wipe.z, distance(px, wipe.xy)));
+      float d = day;
       if (spot.z > 0.) d = mix(d, 1. - d, .8 * (1. - smoothstep(.16, 1., distance(px, spot.xy) / spot.z)));
-      gl_FragColor = vec4(mix(row(uv, 0.).rgb, row(uv, 1.).rgb, d), 1.);
+      gl_FragColor = vec4(mix(row(uv, 0.).rgb, row(vec2(uv.x, bend(uv.y)), 1.).rgb, d), 1.);
     }`;
-  const WIPE_MS = 700;
-  function dualMedia(host, { file, video, cls }) {
+  // same length and curve as the colours of the page (.theme-anim: .6s, css "ease"), so it all changes as one
+  const FADE_MS = 600;
+  function cssEase(t) {                                 // cubic-bezier(.25,.1,.25,1), solved for t
+    let u = t;
+    for (let i = 0; i < 6; i++) {
+      const x = .75 * (1 - u) * (1 - u) * u + .75 * (1 - u) * u * u + u * u * u - t;
+      u = clamp(u - x / Math.max(.75 * (1 - u) * (1 - u) + 2.25 * u * u, 1e-4));
+    }
+    return .3 * (1 - u) * (1 - u) * u + 3 * (1 - u) * u * u + u * u * u;
+  }
+  function dualMedia(host, { file, video, cls, warp = [[0, 0], [1, 1]] }) {
     const canvas = document.createElement('canvas');
     canvas.className = cls;
     canvas.setAttribute('aria-hidden', 'true');
     const gl = canvas.getContext('webgl', { antialias: false, powerPreference: 'low-power' });
     if (!gl) return null;
-    let u = null, spotWas = false, fresh = false, sized = false, frameW = 0, frameH = 0, lastT = -1, lastDraw = 0, retry = 0, wipe = null;
+    let u = null, spotWas = false, fresh = false, sized = false, frameW = 0, frameH = 0, lastT = -1, lastDraw = 0, retry = 0, fade = null;
     let day = html.dataset.theme === 'day' ? 1 : 0;
     const spot = { x: 0, y: 0, r: 0 };
     function init() {
@@ -54,7 +69,8 @@
       const p = gl.getAttribLocation(prog, 'p');
       gl.enableVertexAttribArray(p);
       gl.vertexAttribPointer(p, 2, gl.FLOAT, false, 0, 0);
-      u = Object.fromEntries(['size', 'day', 'map', 'wipe', 'spot', 'edge'].map(n => [n, gl.getUniformLocation(prog, n)]));
+      u = Object.fromEntries(['size', 'day', 'map', 'spot', 'edge', 'warp'].map(n => [n, gl.getUniformLocation(prog, n)]));
+      gl.uniform2fv(u.warp, [...warp, ...Array(6 - warp.length).fill(warp[warp.length - 1])].flat());
       gl.bindTexture(gl.TEXTURE_2D, gl.createTexture());
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
@@ -119,36 +135,31 @@
     return {
       ready,
       setSpot(x, y, r) { spot.x = x; spot.y = y; spot.r = r; },
-      // the new theme grows as a circle from the switch; the video keeps playing underneath
-      setDay(next, x, y) {
-        if (wipe) day = wipe.to;
-        const r = canvas.getBoundingClientRect(), k = canvas.clientWidth / (r.width || 1);
-        const cx = (x - r.left) * k, cy = (y - r.top) * k, W = canvas.clientWidth, H = canvas.clientHeight;
-        wipe = { t0: performance.now(), x: cx, y: cy, to: next ? 1 : 0, R: Math.hypot(Math.max(cx, W - cx), Math.max(cy, H - cy)) + 60 };
-      },
+      // the other theme fades in over the moving video, from wherever a previous change had got to
+      setDay(next) { fade = { t0: performance.now(), from: day, to: next ? 1 : 0 }; },
+      // draw it again on a fresh canvas: after a section has covered it for a while
+      refresh() { sized = false; },
       kick() { if (vid && vid.dataset.on && vid.paused) vid.play().catch(() => {}); },
       frame(now, play, show = play) {
         if (vid) {
           vid.dataset.on = play ? '1' : '';
           if (!play) { if (!vid.paused) vid.pause(); }
           else if (vid.paused && now > retry) { retry = now + 1000; vid.play().catch(() => {}); }
-          if (vid.readyState >= 2 && vid.currentTime !== lastT) {
+          if (show && vid.readyState >= 2 && vid.currentTime !== lastT) {
             lastT = vid.currentTime;
             upload(vid, vid.videoWidth, vid.videoHeight);
           }
         }
-        if (wipe && (!show || now - wipe.t0 >= WIPE_MS)) { day = wipe.to; wipe = null; fresh = true; }
+        if (fade) {
+          const k = (now - fade.t0) / FADE_MS;
+          day = !show || k >= 1 ? fade.to : fade.from + (fade.to - fade.from) * cssEase(k);
+          if (day === fade.to) fade = null;
+          fresh = true;
+        }
         if (!show || !frameW || (!sized && !place())) return;
         // the spotlight moves slowly: when it is the only change, 30 redraws a second are plenty
-        if (!fresh && !wipe && !((spot.r > 0 || spotWas) && now - lastDraw > 32)) return;
-        if (wipe) {
-          const k = (now - wipe.t0) / WIPE_MS, e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
-          gl.uniform4f(u.wipe, wipe.x, wipe.y, wipe.R * e, 0);
-          gl.uniform2f(u.day, day, wipe.to);
-        } else {
-          gl.uniform4f(u.wipe, 0, 0, -1, 0);
-          gl.uniform2f(u.day, day, day);
-        }
+        if (!fresh && !((spot.r > 0 || spotWas) && now - lastDraw > 32)) return;
+        gl.uniform1f(u.day, day);
         gl.uniform3f(u.spot, spot.x, spot.y, spot.r);
         gl.drawArrays(gl.TRIANGLES, 0, 3);
         spotWas = spot.r > 0;
@@ -183,7 +194,10 @@
     sectionLit = 0;
   }
   // a browser that refused to start a video on its own accepts it during a touch
-  if (heroMedia) document.addEventListener('touchend', () => { heroMedia.kick(); if (sectionMedia) sectionMedia.kick(); }, { passive: true });
+  if (heroMedia) ['touchstart', 'touchend'].forEach(ev => document.addEventListener(ev, () => {
+    heroMedia.kick();
+    if (sectionMedia) sectionMedia.kick();
+  }, { passive: true }));
 
   // ---------- loading screen: until the hero video can play and the fonts are in (6 s at most) ----------
   {
@@ -319,7 +333,10 @@
     if (heroMedia) $$('video', content).forEach(v => v.remove());   // the stacked file takes their place
     panelBody.replaceChildren(content);
     if (heroMedia && id === 'trattamenti') sectionMedia = dualMedia($('.tr-media', panelBody), { file: 'assets/tratt-mobile', video: true, cls: 'tr-video' });
-    if (heroMedia && id === 'chi') sectionMedia = dualMedia($('.chi-photo', panelBody), { file: 'assets/chi-mobile', cls: 'chi-canvas' });
+    // two different faces: the man's eyes, nose, mouth and chin (measured on the 720 px tall photos) are moved
+    // onto the woman's, so the spotlight shows one face turning into the other instead of two faces at once
+    if (heroMedia && id === 'chi') sectionMedia = dualMedia($('.chi-photo', panelBody), { file: 'assets/chi-mobile', cls: 'chi-canvas',
+      warp: [[0, 0], [215, 211], [256, 240], [324, 295], [440, 430], [720, 720]].map(p => p.map(y => y / 720)) });
     panelKicker.textContent = LABELS[id];
     updateStatus(panelBody);
     if (id === 'prenota') {
@@ -885,6 +902,7 @@
     panelOpen = false;
     panelReady = false;
     closing = true;
+    if (heroMedia) { heroMedia.refresh(); heroMedia.kick(); }
     ps.target = 0; ps.lit = 0; ps.was = true; // the section spotlight goes out at once
 
     const k = pull.k;
@@ -1333,7 +1351,7 @@
     if (!document.startViewTransition || isTouch) {
       html.classList.add('theme-anim');
       setTheme(day);
-      [heroMedia, sectionMedia].forEach(m => { if (m) m.setDay(day, x, y); });
+      [heroMedia, sectionMedia].forEach(m => { if (m) m.setDay(day); });
       setTimeout(() => html.classList.remove('theme-anim'), 650);
       return;
     }
@@ -1526,7 +1544,8 @@
       darken(spots);
       hs.was = hs.lit > 0;
     }
-    if (heroMedia) heroMedia.frame(now, !panelReady);   // a section covers it: no decoding underneath
+    // it keeps playing under a section (a phone may refuse to start it again without a touch), only not drawn
+    if (heroMedia) heroMedia.frame(now, true, !panelReady);
 
     // a section's background on touch screens: the same drift, kept inside the photo / video
     if (sectionMedia) {
