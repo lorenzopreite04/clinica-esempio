@@ -1341,9 +1341,15 @@
     // on touch screens that circle is drawn with the video itself: a page transition would freeze it
     if (!document.startViewTransition || isTouch) {
       html.classList.add('theme-anim');
+      void document.body.offsetWidth;                   // the fade is in place before the colours change
       setTheme(day);
       [heroMedia, sectionMedia].forEach(m => { if (m) m.setDay(day); });
-      setTimeout(() => html.classList.remove('theme-anim'), 650);
+      // off only once every fade has really ended: on a busy phone they start late, and removing the
+      // class at a fixed time would cut them short, so the colours would jump to the end
+      const end = () => html.classList.remove('theme-anim');
+      requestAnimationFrame(() => Promise.all(document.getAnimations()
+        .filter(a => a instanceof CSSTransition).map(a => a.finished.catch(() => {}))).then(end));
+      setTimeout(end, 2500);
       return;
     }
     const end = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
@@ -1397,7 +1403,7 @@
   // mouse click on the shrunken hero: scroll back up and reopen it full screen
   hero.addEventListener('click', e => {
     if (!document.body.classList.contains('in-grid') || e.target.closest('button,a')) return;
-    if (e.pointerType === 'touch') return;
+    if (e.pointerType === 'touch' && !isTouch) return;  // a touch laptop: that tap shows the spotlight instead
     scrollTo({ top: 0, behavior: 'smooth' });
   });
 
